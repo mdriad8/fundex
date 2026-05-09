@@ -1,44 +1,46 @@
-import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
+
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Approach from './pages/Approach';
 import About from './pages/About';
 import Contact from './pages/Contact';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
+  }, [pathname]);
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <Home />;
-      case 'services':
-        return <Services />;
-      case 'approach':
-        return <Approach />;
-      case 'about':
-        return <About />;
-      case 'contact':
-        return <Contact />;
-      default:
-        return <Home />;
-    }
-  };
+  return null;
+}
 
+function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <main className="min-h-screen">
-        {renderPage()}
-      </main>
-      <Footer setCurrentPage={setCurrentPage} />
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+
+      <div className="min-h-screen bg-slate-950 text-slate-100">
+        <Header />
+
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/approach" element={<Approach />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 
