@@ -1,4 +1,5 @@
 import { ArrowRight, TrendingUp, Users, Award } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 
 function Home() {
@@ -29,6 +30,12 @@ function Home() {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>Fundex Global | Venture Capital & Startup Investment Firm</title>
+        <meta name="description" content="Fundex Global is a venture capital and startup investment firm supporting founders with funding, strategic growth, business scaling, and global investment opportunities." />
+        <meta name="keywords" content="Fundex Global, venture capital, startup funding, startup investment, VC firm, business investment, startup accelerator, global investors" />
+        <link rel="canonical" href="https://fundexglobal.vc/" />
+      </Helmet>
       <section className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 via-slate-950 to-slate-950"></div>
 

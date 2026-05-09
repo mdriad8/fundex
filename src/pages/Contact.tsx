@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 
 function Contact() {
@@ -35,6 +36,12 @@ function Contact() {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>Contact Fundex Global | Connect With Our Investment Team</title>
+        <meta name="description" content="Contact Fundex Global for startup investment opportunities, venture capital partnerships, founder support, and strategic business growth discussions." />
+        <meta name="keywords" content="contact Fundex Global, startup investors, venture capital contact, founder inquiries, investment opportunities" />
+        <link rel="canonical" href="https://fundexglobal.vc/contact" />
+      </Helmet>
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 to-slate-950">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-6">
@@ -229,8 +236,7 @@ function Contact() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-light mb-6">Our Global Presence</h2>
             <p className="text-slate-400 text-lg">
-              With offices across three continents, we're positioned to support
-              founders and investors worldwide.
+              Our office is based in Melbourne, enabling us to support founders and investors across the globe.
             </p>
           </div>
 
