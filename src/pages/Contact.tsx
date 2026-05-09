@@ -26,22 +26,10 @@ function Contact() {
 
   const offices = [
     {
-      city: 'New York',
-      address: '432 Park Avenue, Floor 28',
-      postal: 'New York, NY 10022',
-      region: 'North America HQ',
-    },
-    {
-      city: 'London',
-      address: '1 Poultry, Level 5',
-      postal: 'London EC2R 8EJ',
-      region: 'Europe',
-    },
-    {
-      city: 'Singapore',
-      address: '8 Marina Boulevard, #15-01',
-      postal: 'Singapore 018981',
-      region: 'Asia Pacific',
+      city: 'Melbourne',
+      address: 'Level 9, Suite 1 & 2, 2 Queen Street',
+      postal: 'Melbourne VIC 3000',
+      region: 'Australia',
     },
   ];
 
@@ -246,22 +234,22 @@ function Contact() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="flex justify-center">
             {offices.map((office, index) => (
               <div
                 key={index}
-                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 hover:border-blue-500/50 transition-all"
+                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-12 hover:border-blue-500/50 transition-all w-full max-w-xl"
               >
-                <div className="flex items-start space-x-3 mb-4">
-                  <MapPin className="text-blue-400 flex-shrink-0" size={24} />
+                <div className="flex items-start space-x-4">
+                  <MapPin className="text-blue-400 flex-shrink-0 mt-1" size={28} />
                   <div>
                     <h3 className="text-2xl font-light mb-1">{office.city}</h3>
-                    <div className="text-sm text-blue-400">{office.region}</div>
+                    <div className="text-sm text-blue-400 mb-3">{office.region}</div>
+                    <div className="text-slate-400 text-sm space-y-1">
+                      <p>{office.address}</p>
+                      <p>{office.postal}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="text-slate-400 text-sm space-y-1">
-                  <p>{office.address}</p>
-                  <p>{office.postal}</p>
                 </div>
               </div>
             ))}
