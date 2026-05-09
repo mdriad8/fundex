@@ -1,4 +1,5 @@
 import { Eye, Zap, Layers, Target, Users2, LineChart } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 function Approach() {
   const principles = [
@@ -69,6 +70,12 @@ function Approach() {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>Our Approach | Strategic Startup Investment | Fundex Global</title>
+        <meta name="description" content="Discover Fundex Global's investment approach focused on innovation, founder partnerships, strategic guidance, scalable growth, and long-term startup success." />
+        <meta name="keywords" content="investment strategy, startup approach, venture capital strategy, founder partnership, startup innovation, scalable business growth" />
+        <link rel="canonical" href="https://fundexglobal.vc/approach" />
+      </Helmet>
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 to-slate-950">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-6">

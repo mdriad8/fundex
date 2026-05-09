@@ -1,4 +1,5 @@
 import { Building2, Globe2, Award, Users } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 function About() {
   const values = [
@@ -54,6 +55,12 @@ function About() {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>About Fundex Global | Venture Capital & Innovation Partner</title>
+        <meta name="description" content="Learn about Fundex Global, a venture capital and innovation-focused investment firm helping startups achieve sustainable growth and market leadership." />
+        <meta name="keywords" content="about Fundex Global, venture capital company, startup investment firm, innovation partner, global startup funding" />
+        <link rel="canonical" href="https://fundexglobal.vc/about" />
+      </Helmet>
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 to-slate-950">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-6">

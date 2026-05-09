@@ -1,4 +1,5 @@
 import { TrendingUp, Compass, Briefcase, ChevronRight } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 
 function Services() {
@@ -55,6 +56,12 @@ function Services() {
 
   return (
     <div className="pt-20">
+      <Helmet>
+        <title>Services | Startup Funding & Growth Solutions | Fundex Global</title>
+        <meta name="description" content="Explore Fundex Global services including startup investment, venture capital support, strategic advisory, business scaling, mentorship, and founder growth solutions." />
+        <meta name="keywords" content="startup services, venture capital services, startup mentorship, founder support, startup growth, business scaling, investment advisory" />
+        <link rel="canonical" href="https://fundexglobal.vc/services" />
+      </Helmet>
       <section className="py-24 px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 to-slate-950">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-6">
