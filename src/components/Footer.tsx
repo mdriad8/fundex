@@ -1,10 +1,7 @@
 import { Linkedin, Twitter, Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface FooterProps {
-  setCurrentPage: (page: string) => void;
-}
-
-function Footer({ setCurrentPage }: FooterProps) {
+function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -45,14 +42,19 @@ function Footer({ setCurrentPage }: FooterProps) {
           <div>
             <h4 className="text-sm font-medium mb-4 text-slate-300">Navigate</h4>
             <ul className="space-y-2">
-              {['Services', 'Approach', 'About', 'Contact'].map((item) => (
-                <li key={item}>
-                  <button
-                    onClick={() => setCurrentPage(item.toLowerCase())}
+              {[
+                { name: 'Services', path: '/services' },
+                { name: 'Approach', path: '/approach' },
+                { name: 'About', path: '/about' },
+                { name: 'Contact', path: '/contact' },
+              ].map((item) => (
+                <li key={item.path}>
+                  <Link
+                    to={item.path}
                     className="text-slate-400 hover:text-white text-sm transition-colors"
                   >
-                    {item}
-                  </button>
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
