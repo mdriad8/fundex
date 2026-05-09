@@ -11,10 +11,19 @@ function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navClass = ({ isActive }: { isActive: boolean }) =>
+    `px-4 py-2 text-sm font-light tracking-wide transition-all ${
+      isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
+    }`;
+
+  const mobileNavClass = ({ isActive }: { isActive: boolean }) =>
+    `block w-full text-left px-4 py-3 text-base transition-all ${
+      isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+    }`;
 
   return (
     <header
@@ -26,62 +35,17 @@ function Header() {
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
+
           <NavLink to="/" className="hover:opacity-70 transition-opacity">
             <img src={logo} alt="Fund'ex" className="h-14 w-auto" />
           </NavLink>
 
           <div className="hidden md:flex items-center space-x-1">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `px-4 py-2 text-sm font-light tracking-wide transition-all ${
-                  isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/services"
-              className={({ isActive }) =>
-                `px-4 py-2 text-sm font-light tracking-wide transition-all ${
-                  isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              Services
-            </NavLink>
-            <NavLink
-              to="/approach"
-              className={({ isActive }) =>
-                `px-4 py-2 text-sm font-light tracking-wide transition-all ${
-                  isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              Approach
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `px-4 py-2 text-sm font-light tracking-wide transition-all ${
-                  isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `px-4 py-2 text-sm font-light tracking-wide transition-all ${
-                  isActive ? 'text-blue-400' : 'text-slate-300 hover:text-white'
-                }`
-              }
-            >
-              Contact
-            </NavLink>
+            <NavLink to="/" end className={navClass}>Home</NavLink>
+            <NavLink to="/services" className={navClass}>Services</NavLink>
+            <NavLink to="/approach" className={navClass}>Approach</NavLink>
+            <NavLink to="/about" className={navClass}>About</NavLink>
+            <NavLink to="/contact" className={navClass}>Contact</NavLink>
           </div>
 
           <button
@@ -96,62 +60,11 @@ function Header() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-slate-900/98 backdrop-blur-lg border-b border-slate-800">
           <div className="px-6 py-4 space-y-1">
-            <NavLink
-              to="/"
-              end
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 text-base transition-all ${
-                  isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
-                }`
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/services"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 text-base transition-all ${
-                  isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
-                }`
-              }
-            >
-              Services
-            </NavLink>
-            <NavLink
-              to="/approach"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 text-base transition-all ${
-                  isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
-                }`
-              }
-            >
-              Approach
-            </NavLink>
-            <NavLink
-              to="/about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 text-base transition-all ${
-                  isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
-                }`
-              }
-            >
-              About
-            </NavLink>
-            <NavLink
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 text-base transition-all ${
-                  isActive ? 'text-blue-400 bg-slate-800/50' : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
-                }`
-              }
-            >
-              Contact
-            </NavLink>
+            <NavLink to="/" end className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink>
+            <NavLink to="/services" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Services</NavLink>
+            <NavLink to="/approach" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Approach</NavLink>
+            <NavLink to="/about" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>About</NavLink>
+            <NavLink to="/contact" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Contact</NavLink>
           </div>
         </div>
       )}
