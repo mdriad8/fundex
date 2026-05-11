@@ -42,34 +42,41 @@ function Contact() {
         <meta name="keywords" content="contact Fundex Global, startup investors, venture capital contact, founder inquiries, investment opportunities" />
         <link rel="canonical" href="https://fundexglobal.vc/contact" />
       </Helmet>
-      <section className="py-24 px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 to-slate-950">
+
+      {/* Hero */}
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-950/15 via-indigo-950/5 to-slate-950">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-6">
-            <span className="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-light tracking-wide">
+          <div className="mb-5 sm:mb-6">
+            <span className="inline-block px-4 sm:px-5 py-2 bg-blue-500/10 border border-blue-500/25 rounded-full text-blue-400 text-xs sm:text-sm font-light tracking-widest">
               Get in Touch
             </span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-light mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light mb-5 sm:mb-6 leading-tight">
             Let's Start a
             <br />
-            Conversation
+            <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              Conversation
+            </span>
           </h1>
-          <p className="text-xl text-slate-400 leading-relaxed">
+          <p className="text-base sm:text-xl text-slate-400 leading-relaxed px-2">
             Whether you're seeking investment, advisory support, or exploring opportunities,
             we're here to listen and explore how we can work together.
           </p>
         </div>
       </section>
 
-      <section className="py-24 px-6 lg:px-8">
+      {/* Form + Sidebar */}
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-12">
-            <div className="lg:col-span-3">
-              <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-8 md:p-12">
-                <h2 className="text-3xl font-light mb-8">Send Us a Message</h2>
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+            {/* Form */}
+            <div className="lg:col-span-3">
+              <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-8 md:p-12">
+                <h2 className="text-2xl sm:text-3xl font-light mb-6 sm:mb-8">Send Us a Message</h2>
+
+                <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
                         Full Name *
@@ -81,7 +88,7 @@ function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm sm:text-base"
                         placeholder="John Smith"
                       />
                     </div>
@@ -97,7 +104,7 @@ function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm sm:text-base"
                         placeholder="john@company.com"
                       />
                     </div>
@@ -113,7 +120,7 @@ function Contact() {
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm sm:text-base"
                       placeholder="Your Company Inc."
                     />
                   </div>
@@ -128,7 +135,7 @@ function Contact() {
                       value={formData.inquiry}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 text-sm sm:text-base"
                     >
                       <option value="investment">Seeking Investment</option>
                       <option value="advisory">Strategic Advisory</option>
@@ -149,81 +156,97 @@ function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       required
-                      rows={6}
-                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                      rows={5}
+                      className="w-full px-4 py-3 bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 resize-none text-sm sm:text-base"
                       placeholder="Tell us about your company, vision, and how we can help..."
-                    ></textarea>
+                    />
                   </div>
 
                   <button
                     type="submit"
-                    className="group w-full md:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all flex items-center justify-center space-x-2 text-lg"
+                    className="group w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all duration-300 text-base sm:text-lg cursor-pointer"
                   >
                     <span>Send Message</span>
-                    <Send className="group-hover:translate-x-1 transition-transform" size={20} />
+                    <Send className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
                   </button>
 
-                  <p className="text-sm text-slate-500">
-                    We typically respond within 24-48 hours. For urgent inquiries, please call our main office.
+                  <p className="text-xs sm:text-sm text-slate-500">
+                    We typically respond within 24–48 hours. For urgent inquiries, please call our main office.
                   </p>
                 </form>
               </div>
             </div>
 
-            <div className="lg:col-span-2 space-y-8">
-              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
-                <h3 className="text-xl font-medium mb-6">Direct Contact</h3>
-                <div className="space-y-4">
+            {/* Sidebar */}
+            <div className="lg:col-span-2 space-y-5 sm:space-y-8">
+              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sm:p-8 hover:border-blue-500/30 transition-all duration-300">
+                <h3 className="text-lg sm:text-xl font-medium mb-5 sm:mb-6">Direct Contact</h3>
+                <div className="space-y-4 sm:space-y-5">
                   <div className="flex items-start space-x-3">
-                    <Mail className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-sm text-slate-400 mb-1">General Inquiries</div>
-                      <a href="mailto:hello@fundex.com" className="text-slate-200 hover:text-blue-400 transition-colors">
-                        hello@fundex.com
+                    <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-blue-400" size={18} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs sm:text-sm text-slate-400 mb-1">General Inquiries</div>
+                      <a
+                        href="mailto:info@fundexglobal.vc"
+                        className="text-slate-200 hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base break-all"
+                      >
+                        info@fundexglobal.vc
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <Mail className="text-blue-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-sm text-slate-400 mb-1">Investment Inquiries</div>
-                      <a href="mailto:invest@fundex.com" className="text-slate-200 hover:text-blue-400 transition-colors">
-                        invest@fundex.com
+                    <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-blue-400" size={18} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs sm:text-sm text-slate-400 mb-1">Investment Inquiries</div>
+                      <a
+                        href="mailto:info@fundexglobal.vc"
+                        className="text-slate-200 hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base break-all"
+                      >
+                        info@fundexglobal.vc
                       </a>
                     </div>
                   </div>
 
                   <div className="flex items-start space-x-3">
-                    <Phone className="text-blue-400 flex-shrink-0 mt-1" size={20} />
+                    <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                      <Phone className="text-blue-400" size={18} />
+                    </div>
                     <div>
-                      <div className="text-sm text-slate-400 mb-1">Main Office</div>
-                      <a href="tel:+61 451 077 562" className="text-slate-200 hover:text-blue-400 transition-colors">
-                        +61 451 077 562
+                      <div className="text-xs sm:text-sm text-slate-400 mb-1">Main Office</div>
+                      <a
+                        href="tel:+61426655519"
+                        className="text-slate-200 hover:text-blue-400 transition-colors duration-200 text-sm sm:text-base"
+                      >
+                        +61 426 655 519
                       </a>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8">
-                <h3 className="text-xl font-medium mb-6">Office Hours</h3>
+              <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 sm:p-8 hover:border-blue-500/30 transition-all duration-300">
+                <h3 className="text-lg sm:text-xl font-medium mb-5 sm:mb-6">Office Hours</h3>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Monday - Friday</span>
-                    <span className="text-slate-200">9:00 AM - 5:00 PM</span>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-slate-400 flex-shrink-0">Monday – Friday</span>
+                    <span className="text-slate-200 text-right">9:00 AM – 5:00 PM</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4">
                     <span className="text-slate-400">Saturday</span>
-                    <span className="text-slate-200">By Appointment Only</span>
+                    <span className="text-slate-200 text-right">By Appointment</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between gap-4">
                     <span className="text-slate-400">Sunday</span>
-                    <span className="text-slate-200">Closed</span>
+                    <span className="text-slate-200 text-right">Closed</span>
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 mt-4">
-                  Times shown are EST. We operate across multiple time zones globally.
+                  Times shown are AEST. We operate across multiple time zones globally.
                 </p>
               </div>
             </div>
@@ -231,11 +254,12 @@ function Contact() {
         </div>
       </section>
 
-      <section className="py-24 px-6 lg:px-8 bg-slate-900/30">
+      {/* Office Location */}
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/30 border-y border-slate-800/50">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-light mb-6">Our Global Presence</h2>
-            <p className="text-slate-400 text-lg">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-light mb-4 sm:mb-6">Our Global Presence</h2>
+            <p className="text-slate-400 text-base sm:text-lg">
               Our office is based in Melbourne, enabling us to support founders and investors across the globe.
             </p>
           </div>
@@ -244,12 +268,14 @@ function Contact() {
             {offices.map((office, index) => (
               <div
                 key={index}
-                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-12 hover:border-blue-500/50 transition-all w-full max-w-xl"
+                className="bg-slate-900/50 border border-slate-800 rounded-2xl p-8 sm:p-12 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 w-full max-w-xl"
               >
                 <div className="flex items-start space-x-4">
-                  <MapPin className="text-blue-400 flex-shrink-0 mt-1" size={28} />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="text-blue-400" size={22} />
+                  </div>
                   <div>
-                    <h3 className="text-2xl font-light mb-1">{office.city}</h3>
+                    <h3 className="text-xl sm:text-2xl font-light mb-1">{office.city}</h3>
                     <div className="text-sm text-blue-400 mb-3">{office.region}</div>
                     <div className="text-slate-400 text-sm space-y-1">
                       <p>{office.address}</p>
@@ -263,17 +289,21 @@ function Contact() {
         </div>
       </section>
 
-      <section className="py-24 px-6 lg:px-8">
+      {/* Final CTA */}
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-br from-blue-950/30 to-slate-900/30 border border-slate-800 rounded-3xl p-12 md:p-16">
-            <h2 className="text-3xl font-light mb-4">Prefer a Direct Conversation?</h2>
-            <p className="text-slate-400 mb-8">
+          <div className="bg-gradient-to-br from-blue-950/25 via-indigo-950/10 to-slate-900/30 border border-slate-800 rounded-3xl p-8 sm:p-12 md:p-16">
+            <h2 className="text-2xl sm:text-3xl font-light mb-3 sm:mb-4">Prefer a Direct Conversation?</h2>
+            <p className="text-slate-400 mb-6 sm:mb-8 text-base sm:text-lg">
               Schedule a call with our team to discuss your specific needs and explore
               how Fund'ex can support your journey.
             </p>
-            <button className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all text-lg">
+            <a
+              href="tel:+61426655519"
+              className="inline-flex items-center px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all duration-300 text-base sm:text-lg cursor-pointer"
+            >
               Schedule a Call
-            </button>
+            </a>
           </div>
         </div>
       </section>
