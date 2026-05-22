@@ -38,27 +38,39 @@ function Home() {
       </Helmet>
 
       {/* Hero */}
-      <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/30 via-slate-950 to-slate-950" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] lg:w-[700px] h-[200px] sm:h-[300px] lg:h-[400px] bg-blue-600/8 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 left-1/4 w-[200px] lg:w-[300px] h-[200px] lg:h-[300px] bg-indigo-600/6 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative min-h-[75vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-teal-950">
+        {/* Radial glow — same as inner pages */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-teal-800/20 via-transparent to-transparent" />
+        {/* Grid overlay — same as inner pages */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        {/* Extra center glow for home */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] lg:w-[800px] h-[400px] lg:h-[500px] bg-teal-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto text-center relative z-10 py-16">
-          <div className="mb-6 sm:mb-8">
-            <span className="inline-block px-4 sm:px-5 py-2 bg-blue-500/10 border border-blue-500/25 rounded-full text-blue-400 text-xs sm:text-sm font-light tracking-widest">
+        <div className="relative max-w-5xl mx-auto text-center w-full py-16 md:py-24 z-10">
+          {/* Badge — matches inner pages */}
+          <div className="mb-5 sm:mb-6">
+            <span className="inline-block px-4 sm:px-5 py-2 bg-teal-500/10 border border-teal-500/30 rounded-full text-teal-400 text-xs sm:text-sm font-light tracking-widest">
               Capital &bull; Strategy &bull; Execution
             </span>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light tracking-tight mb-6 sm:mb-8 leading-tight">
+          {/* Heading — matches inner pages font-light style */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-5 sm:mb-6 leading-tight text-white">
             Building the Future,
             <br />
-            <span className="bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
               One Company at a Time
             </span>
           </h1>
 
-          <p className="text-base sm:text-xl md:text-2xl text-slate-400 font-light max-w-3xl mx-auto mb-10 sm:mb-14 leading-relaxed px-2">
+          {/* Divider */}
+          <div className="flex items-center justify-center gap-4 mb-6 sm:mb-8 max-w-3xl mx-auto">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-teal-500/50" />
+            <div className="w-1.5 h-1.5 rounded-full bg-teal-400/80" />
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-teal-500/50" />
+          </div>
+
+          <p className="text-base sm:text-xl text-slate-400 leading-relaxed px-2 max-w-3xl mx-auto mb-10 sm:mb-14">
             Fund'ex operates at the intersection of capital, strategy, and execution.
             We partner with founders, funds, and investors to build enduring companies —
             from first cheque to final exit.
@@ -67,35 +79,40 @@ function Home() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               to="/contact"
-              className="group w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-400 hover:to-indigo-500 text-white rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-blue-500/35 transition-all duration-300 text-base sm:text-lg cursor-pointer"
+              className="group w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 sm:px-9 py-4 bg-teal-600 hover:bg-teal-500 text-white rounded-xl shadow-lg shadow-teal-600/30 hover:shadow-teal-500/40 transition-all duration-300 text-base sm:text-lg font-medium cursor-pointer"
             >
               <span>Partner With Us</span>
               <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />
             </Link>
             <Link
               to="/services"
-              className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-slate-900/50 border border-slate-700 hover:border-blue-400/50 hover:bg-slate-800/60 text-slate-300 hover:text-white rounded-xl backdrop-blur-sm transition-all duration-300 text-base sm:text-lg cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-7 sm:px-9 py-4 border border-white/20 hover:border-teal-400/60 hover:bg-teal-500/10 text-white rounded-xl transition-all duration-300 text-base sm:text-lg font-light cursor-pointer"
             >
               View Services
             </Link>
           </div>
 
-          <div className="mt-14 sm:mt-20 text-xs sm:text-sm text-slate-500 font-light tracking-widest uppercase">
-            Quiet. Precise. Global.
+          {/* Bottom tagline */}
+          <div className="mt-16 sm:mt-20 flex items-center justify-center gap-6 sm:gap-10 text-xs text-slate-500 font-light tracking-widest uppercase">
+            <span>Quiet</span>
+            <span className="w-1 h-1 rounded-full bg-teal-600/50" />
+            <span>Precise</span>
+            <span className="w-1 h-1 rounded-full bg-teal-600/50" />
+            <span>Global</span>
           </div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-900/40 border-y border-slate-800/50">
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 border-y border-gray-200">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl sm:text-4xl md:text-5xl font-light bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-light bg-gradient-to-r from-teal-400 to-teal-500 bg-clip-text text-transparent mb-2">
                   {stat.value}
                 </div>
-                <div className="text-slate-400 text-xs sm:text-sm tracking-wide leading-snug">{stat.label}</div>
+                <div className="text-gray-500 text-xs sm:text-sm tracking-wide leading-snug">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -103,11 +120,11 @@ function Home() {
       </section>
 
       {/* Why Fund'ex */}
-      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8">
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">Why Fund'ex</h2>
-            <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6 text-slate-900">Why Fund'ex</h2>
+            <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
               We're not just investors. We're builders, advisors, and long-term partners
               committed to your success.
             </p>
@@ -117,13 +134,13 @@ function Home() {
             {highlights.map((item, index) => (
               <div
                 key={index}
-                className="p-6 sm:p-8 bg-slate-900/50 border border-slate-800 rounded-2xl hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 group"
+                className="p-6 sm:p-8 bg-white border border-gray-200 rounded-2xl shadow-sm hover:border-teal-600/40 hover:shadow-lg hover:shadow-teal-600/10 transition-all duration-300 group"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500/20 to-indigo-500/10 rounded-xl flex items-center justify-center mb-5 sm:mb-6 group-hover:from-blue-500/30 group-hover:to-indigo-500/20 transition-all duration-300">
-                  <item.icon className="text-blue-400" size={22} />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-teal-600/20 to-teal-600/10 rounded-xl flex items-center justify-center mb-5 sm:mb-6 group-hover:from-teal-600/30 group-hover:to-teal-600/20 transition-all duration-300">
+                  <item.icon className="text-teal-400" size={22} />
                 </div>
-                <h3 className="text-lg sm:text-xl font-medium mb-2 sm:mb-3">{item.title}</h3>
-                <p className="text-slate-400 leading-relaxed text-sm sm:text-base">{item.description}</p>
+                <h3 className="text-lg sm:text-xl font-medium mb-2 sm:mb-3 text-slate-900">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{item.description}</p>
               </div>
             ))}
           </div>
@@ -131,16 +148,16 @@ function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-950/10 via-indigo-950/5 to-slate-950">
+      <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8 bg-teal-600">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">Ready to Scale?</h2>
-          <p className="text-slate-400 text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6 text-white">Ready to Scale?</h2>
+          <p className="text-white/85 text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl mx-auto">
             Whether you're seeking investment, strategic guidance, or exit planning,
             we're here to help you build something exceptional.
           </p>
           <Link
             to="/contact"
-            className="group inline-flex items-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-slate-950 hover:bg-blue-50 rounded-xl shadow-xl shadow-white/5 transition-all duration-300 text-base sm:text-lg font-medium cursor-pointer"
+            className="group inline-flex items-center space-x-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-slate-950 hover:bg-teal-50 rounded-xl shadow-xl shadow-white/5 transition-all duration-300 text-base sm:text-lg font-medium cursor-pointer"
           >
             <span>Start a Conversation</span>
             <ArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={20} />

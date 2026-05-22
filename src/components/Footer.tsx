@@ -26,7 +26,7 @@ function Footer() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 hover:border-blue-500/50 hover:bg-blue-500/10 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-all duration-200"
+                  className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 hover:border-teal-600/50 hover:bg-teal-600/10 flex items-center justify-center text-slate-400 hover:text-teal-400 transition-all duration-200"
                 >
                   <Icon size={17} />
                 </a>
