@@ -21,7 +21,7 @@ See `docs/launch/owner-decisions.md`. Launch is blocked until at least these are
    - [ ] `RESEND_API_KEY`: a Resend API key with send permission only
    - [ ] `CONTACT_TO_EMAIL`: the monitored inbox that receives enquiries
    - [ ] `CONTACT_FROM_EMAIL`: e.g. `Fundex Global website <web@fundexglobal.vc>`. **Verify `fundexglobal.vc` in Resend first**, adding the SPF/DKIM DNS records it lists to the domain's DNS without touching the existing Google Workspace MX records
-   - [ ] `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`: strongly recommended. Without them, rate limits apply per serverless instance only
+   - [ ] `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`: **required in production**. With `VERCEL_ENV=production` and no shared store, the form returns 503 (review round 4). Set `RATE_LIMIT_ALLOW_MEMORY=true` only as a deliberate, temporary override
    - [ ] `RATE_LIMIT_SALT`: any long random string
    - [ ] Optional: `PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` (Cloudflare Turnstile), if spam gets through the honeypot and timing checks
 3. Until the email variables are set, the form returns **HTTP 503** and tells visitors that nothing was sent. It never shows a false success.
@@ -34,6 +34,12 @@ See `docs/launch/owner-decisions.md`. Launch is blocked until at least these are
 - [ ] Preview with email variables set: submit one real test enquiry. Confirm it arrives, that Reply-To is the visitor, and that the page shows success
 - [ ] Preview with Resend temporarily misconfigured (wrong key): confirm the page shows the "could not be sent" error
 - [ ] Six quick submissions from one connection: the sixth is refused with "Too many messages"
+- [ ] Unconfirmed path: temporarily point `RESEND_API_KEY` at an invalid key and confirm the page shows the "could not be sent" (rejected) message. If possible, also simulate a provider timeout and confirm the "couldn't confirm" message
+- [ ] Upstash outage: temporarily set a wrong `UPSTASH_REDIS_REST_TOKEN`, then confirm in the logs that limits still apply (`contact.rate_store_error`, memory fallback)
+- [ ] Production without Upstash returns 503 (by design). Confirm Upstash is set before release
+- [ ] If Turnstile is enabled: the widget renders under the CSP, and a submission without a token is refused
+- [ ] Deployed CSP: no console CSP violations on any page; cross-origin POST to `/api/contact` returns 403
+- [ ] Validate JSON-LD on the deployed URL with the Schema.org validator / Google Rich Results Test
 - [ ] Lighthouse on the preview URL: mobile Performance ≥ 90, Accessibility 100, Best Practices ≥ 95, SEO 100
 - [ ] Social preview: paste the preview URL into LinkedIn Post Inspector (owner's account) and check the title, description and image
 

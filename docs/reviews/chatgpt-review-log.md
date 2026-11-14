@@ -54,3 +54,20 @@ All reviews took place in the founder's ChatGPT project **"Fundex"**, chat **"Fu
 | Pass the selected service into the contact form | Each service section on `/services` now links to `/contact?enquiry=<id>`, which preselects the dropdown. Tested |
 | Test the two-business-day reply promise against real inbox monitoring | Owner decision 11 (unchanged) |
 | Verify AFSL status before publishing the "no AFSL" statement | Owner decision 2 (unchanged, blocking) |
+
+## Round 4: technical (security, reliability, SEO, tests)
+
+**Sent:** `fundex-technical-review.md`, containing the architecture, test results, before/after Lighthouse tables and the full source of `vercel.json`, `astro.config.mjs`, the contact API, handler, rate limiter, spam checks, validation, delivery, client script and base layout. Known limits were disclosed up front: a per-instance memory limiter, local-only Lighthouse, no field CWV.
+
+**Verdict:** 8.5/10. Conditional pass for merge; **production release blocked** until the deployment gates are proven. "The site is technically well structured; the remaining challenge is proving it behaves correctly when external services fail."
+
+| ChatGPT point | Action taken |
+|---|---|
+| **P0:** "Nothing was delivered" after a provider error is misleading; a timeout can occur after Resend accepted the email | Delivery now distinguishes **rejected** (provider 4xx → 502, "not delivered") from **unconfirmed** (timeout, network error or 5xx → 504, "We couldn't confirm that your message was received. Please wait a few minutes before resending…"). Unit tests cover 4xx, 5xx and timeout |
+| Duplicate risk on retry; add idempotency | A deterministic `Idempotency-Key` (SHA-256 of sender + type + message) is sent to Resend. Tested |
+| Log delivery IDs; never log enquiry contents | Logs `contact.sent {providerId}` and `contact.delivery_<reason> {providerStatus}` only. A test asserts that no email address or message text reaches the logs |
+| `request.text()` buffers the whole body before the 20 KB check | Unsupported content types are rejected before reading. The body is read as a stream and reading stops at 20 KB. A test confirms early abort with no Content-Length |
+| In-memory limits are bypassable; Redis errors fail open | With `VERCEL_ENV=production` and no Upstash, the form returns 503 (override: `RATE_LIMIT_ALLOW_MEMORY=true`). A store outage now falls back to memory limits instead of failing open. Tested |
+| Prefer the platform-provided client address over forwarded headers | `getClientIp` uses Astro's `clientAddress` and consults forwarded headers only when it is missing or loopback (local development). Tested |
+| JSON-LD must escape HTML-significant characters | Already: `jsonLd()` escapes `<` as `\u003c` |
+| Tests verify app behaviour, not external integration (Resend accepted/rejected/timeout, Upstash outage, Turnstile, deployed CSP/redirects/JSON-LD, inbox arrival) | Not fakeable from here: these need the owner's Vercel, Resend and Upstash accounts. Listed as **blocking launch gates** in `docs/launch/deployment-checklist.md` §C and in the PR |

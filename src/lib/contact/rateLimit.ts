@@ -67,12 +67,27 @@ export class UpstashStore implements RateStore {
 }
 
 let memory: MemoryStore | undefined;
-export function storeFromEnv(env: Record<string, string | undefined>): RateStore {
-  if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN) {
-    return new UpstashStore(env.UPSTASH_REDIS_REST_URL, env.UPSTASH_REDIS_REST_TOKEN);
-  }
+export function memoryStore(): MemoryStore {
   memory ??= new MemoryStore();
   return memory;
+}
+
+export function hasSharedStore(env: Record<string, string | undefined>): boolean {
+  return Boolean(env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN);
+}
+
+/**
+ * Production (VERCEL_ENV=production) requires a shared store, because per-instance memory limits can be
+ * bypassed across serverless instances (ChatGPT review round 4). Set RATE_LIMIT_ALLOW_MEMORY=true to
+ * override deliberately.
+ */
+export function sharedStoreRequired(env: Record<string, string | undefined>): boolean {
+  return env.VERCEL_ENV === 'production' && env.RATE_LIMIT_ALLOW_MEMORY !== 'true' && !hasSharedStore(env);
+}
+
+export function storeFromEnv(env: Record<string, string | undefined>): RateStore {
+  if (hasSharedStore(env)) return new UpstashStore(env.UPSTASH_REDIS_REST_URL!, env.UPSTASH_REDIS_REST_TOKEN!);
+  return memoryStore();
 }
 
 /** Hash identifiers so raw IPs and emails are never used as storage keys. */

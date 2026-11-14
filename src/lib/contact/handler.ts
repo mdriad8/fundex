@@ -1,6 +1,17 @@
 import { validateContact, type FieldErrors } from './validate';
 import { checkSpam, verifyTurnstile } from './spam';
-import { checkRate, CONTACT_RULES, EMAIL_RULE, hashKey, storeFromEnv, type RateStore } from './rateLimit';
+import {
+  checkRate,
+  CONTACT_RULES,
+  EMAIL_RULE,
+  hashKey,
+  memoryStore,
+  sharedStoreRequired,
+  storeFromEnv,
+  type RateRule,
+  type RateStore,
+  type RateResult,
+} from './rateLimit';
 import { deliver, deliveryConfigFromEnv } from './deliver';
 import { site } from '../../data/site';
 
@@ -23,6 +34,7 @@ type Outcome =
   | { status: 422; code: 'invalid'; errors: FieldErrors }
   | { status: 429; code: 'rate-limited'; retryAfterSec: number }
   | { status: 502; code: 'delivery-failed' }
+  | { status: 504; code: 'delivery-unconfirmed' }
   | { status: 503; code: 'not-configured' };
 
 const fallbackContact = site.contact.emailVerified
@@ -38,7 +50,8 @@ export const MESSAGES: Record<Outcome['code'], string> = {
   unsupported: `Something went wrong reading your submission. Please try again or ${fallbackContact}.`,
   invalid: 'Please check the highlighted fields and try again.',
   'rate-limited': `Too many messages have been sent from this connection. Please wait a while, or ${fallbackContact}.`,
-  'delivery-failed': `Your message could not be sent because of a problem on our side. Nothing was delivered. Please try again later or ${fallbackContact}.`,
+  'delivery-failed': `Your message could not be sent because of a problem on our side, so it was not delivered. Please try again later or ${fallbackContact}.`,
+  'delivery-unconfirmed': `We couldn't confirm that your message was received. Please wait a few minutes before resending, or ${fallbackContact}.`,
   'not-configured': `The contact form is not accepting messages yet, so nothing was sent. Please ${fallbackContact}.`,
 };
 
@@ -46,18 +59,60 @@ export const MESSAGES: Record<Outcome['code'], string> = {
  * Client IP for rate limiting. On Vercel, `x-vercel-forwarded-for` / `x-forwarded-for` are set by the
  * platform edge (client-supplied values are not trusted through), so they reflect the real client.
  */
-export function getClientIp(request: Request, fallback?: string): string | undefined {
+export function getClientIp(request: Request, platformAddress?: string): string | undefined {
+  // Prefer the address the platform adapter provides. Forwarded headers are only consulted when the
+  // platform address is missing or loopback (local development / a local reverse proxy).
+  const loopback = !platformAddress || /^(127\.|::1$|::ffff:127\.)/.test(platformAddress);
+  if (!loopback) return platformAddress;
   const xff = request.headers.get('x-vercel-forwarded-for') ?? request.headers.get('x-forwarded-for');
   if (xff) return xff.split(',')[0]!.trim();
-  return request.headers.get('x-real-ip') ?? fallback;
+  return request.headers.get('x-real-ip') ?? platformAddress;
+}
+
+const ALLOWED_TYPES = ['application/x-www-form-urlencoded', 'multipart/form-data', 'application/json'];
+
+/** Read the body as text, aborting as soon as it exceeds `limit` bytes (no full buffering of large bodies). */
+async function readLimited(request: Request, limit: number): Promise<string | 'too-large'> {
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) {
+      await reader.cancel().catch(() => {});
+      return 'too-large';
+    }
+    chunks.push(value);
+  }
+  const all = new Uint8Array(size);
+  let offset = 0;
+  for (const c of chunks) {
+    all.set(c, offset);
+    offset += c.byteLength;
+  }
+  return new TextDecoder().decode(all);
+}
+
+/** Rate-limit with the configured store; if a shared store fails, fall back to memory rather than failing open. */
+async function rateCheck(store: RateStore, id: string, rules: RateRule[], log: Deps['log']): Promise<RateResult> {
+  try {
+    return await checkRate(store, id, rules);
+  } catch (e) {
+    log?.('contact.rate_store_error', { error: String(e).slice(0, 200) });
+    return checkRate(memoryStore(), id, rules);
+  }
 }
 
 async function readBody(request: Request): Promise<Record<string, unknown> | 'too-large' | 'unsupported' | 'bad'> {
+  const type = (request.headers.get('content-type') ?? '').toLowerCase();
+  if (!ALLOWED_TYPES.some((t) => type.includes(t))) return 'unsupported';
   const declared = Number(request.headers.get('content-length') ?? '0');
   if (declared > MAX_BODY_BYTES) return 'too-large';
-  const type = (request.headers.get('content-type') ?? '').toLowerCase();
-  const text = await request.text();
-  if (new TextEncoder().encode(text).length > MAX_BODY_BYTES) return 'too-large';
+  const text = await readLimited(request, MAX_BODY_BYTES);
+  if (text === 'too-large') return 'too-large';
   try {
     if (type.includes('application/json')) {
       const parsed = JSON.parse(text);
@@ -88,19 +143,19 @@ export async function processContact(request: Request, deps: Deps): Promise<Outc
   if (body === 'unsupported') return { status: 415, code: 'unsupported' };
   if (body === 'bad') return { status: 400, code: 'bad-request' };
 
+  if (!deps.store && sharedStoreRequired(deps.env)) {
+    log('contact.rate_store_missing');
+    return { status: 503, code: 'not-configured' };
+  }
+
   const ip = getClientIp(request, deps.clientAddress) ?? 'unknown';
   const salt = deps.env.RATE_LIMIT_SALT ?? 'fundex';
   const store = deps.store ?? storeFromEnv(deps.env);
 
-  try {
-    const ipRate = await checkRate(store, await hashKey(ip, salt), CONTACT_RULES);
-    if (!ipRate.allowed) {
-      log('contact.rate_limited', { rule: ipRate.rule });
-      return { status: 429, code: 'rate-limited', retryAfterSec: ipRate.retryAfterSec };
-    }
-  } catch (e) {
-    // Fail open on a store outage so genuine enquiries are not lost; spam checks still apply.
-    log('contact.rate_store_error', { error: String(e) });
+  const ipRate = await rateCheck(store, await hashKey(ip, salt), CONTACT_RULES, log);
+  if (!ipRate.allowed) {
+    log('contact.rate_limited', { rule: ipRate.rule });
+    return { status: 429, code: 'rate-limited', retryAfterSec: ipRate.retryAfterSec };
   }
 
   const message = typeof body.message === 'string' ? body.message : '';
@@ -116,21 +171,18 @@ export async function processContact(request: Request, deps: Deps): Promise<Outc
   const result = validateContact(body);
   if (!result.ok) return { status: 422, code: 'invalid', errors: result.errors };
 
-  try {
-    const emailRate = await checkRate(store, await hashKey(result.data.email, salt), [EMAIL_RULE]);
-    if (!emailRate.allowed) return { status: 429, code: 'rate-limited', retryAfterSec: emailRate.retryAfterSec };
-  } catch (e) {
-    log('contact.rate_store_error', { error: String(e) });
-  }
+  const emailRate = await rateCheck(store, await hashKey(result.data.email, salt), [EMAIL_RULE], log);
+  if (!emailRate.allowed) return { status: 429, code: 'rate-limited', retryAfterSec: emailRate.retryAfterSec };
 
   const delivery = await deliver(result.data, deliveryConfigFromEnv(deps.env), deps.fetchImpl, new Date(now()));
   if (!delivery.ok) {
-    log(`contact.${delivery.reason}`);
-    return delivery.reason === 'not-configured'
-      ? { status: 503, code: 'not-configured' }
-      : { status: 502, code: 'delivery-failed' };
+    // Log the outcome only: never the enquiry contents or credentials.
+    log(`contact.delivery_${delivery.reason}`, delivery.status ? { providerStatus: delivery.status } : undefined);
+    if (delivery.reason === 'not-configured') return { status: 503, code: 'not-configured' };
+    if (delivery.reason === 'rejected') return { status: 502, code: 'delivery-failed' };
+    return { status: 504, code: 'delivery-unconfirmed' };
   }
-  log('contact.sent');
+  log('contact.sent', { providerId: delivery.id });
   return { status: 200, code: 'sent' };
 }
 

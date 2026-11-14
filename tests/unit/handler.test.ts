@@ -62,11 +62,53 @@ describe('handleContact', () => {
     expect(json.message).toMatch(/nothing was sent/i);
   });
 
-  it('reports a provider failure honestly (502)', async () => {
-    const failing = vi.fn(async () => new Response('err', { status: 500 }));
+  it('reports a definite provider rejection (4xx) as not delivered (502)', async () => {
+    const failing = vi.fn(async () => new Response('err', { status: 422 }));
     const res = await handleContact(req(fields()), deps(configured, failing));
     expect(res.status).toBe(502);
     expect(await res.json()).toMatchObject({ ok: false, code: 'delivery-failed' });
+  });
+
+  it('never claims "not delivered" when the outcome is unknown: provider 5xx (504 unconfirmed)', async () => {
+    const failing = vi.fn(async () => new Response('err', { status: 503 }));
+    const res = await handleContact(req(fields()), deps(configured, failing));
+    expect(res.status).toBe(504);
+    const json = await res.json();
+    expect(json).toMatchObject({ ok: false, code: 'delivery-unconfirmed' });
+    expect(json.message).toMatch(/couldn't confirm/i);
+    expect(json.message).not.toMatch(/not delivered|nothing was/i);
+  });
+
+  it('treats a timeout or network error as unconfirmed (504)', async () => {
+    const timeout = vi.fn(async () => {
+      throw new DOMException('The operation timed out.', 'TimeoutError');
+    });
+    const res = await handleContact(req(fields()), deps(configured, timeout));
+    expect(res.status).toBe(504);
+    expect((await res.json()).code).toBe('delivery-unconfirmed');
+  });
+
+  it('sends a deterministic Idempotency-Key so resubmissions are not duplicated', async () => {
+    const f1 = okFetch();
+    const f2 = okFetch();
+    await handleContact(req(fields(), { ip: '192.0.2.10' }), deps(configured, f1));
+    await handleContact(req(fields(), { ip: '192.0.2.11' }), deps(configured, f2));
+    const key = (f: ReturnType<typeof okFetch>) =>
+      new Headers((f.mock.calls[0] as unknown as [string, RequestInit])[1].headers).get('idempotency-key');
+    expect(key(f1)).toMatch(/^fx-contact-[0-9a-f]{32}$/);
+    expect(key(f1)).toBe(key(f2));
+    const f3 = okFetch();
+    await handleContact(req(fields({ message: 'A completely different message about growth.' })), deps(configured, f3));
+    expect(key(f3)).not.toBe(key(f1));
+  });
+
+  it('logs outcomes without enquiry contents', async () => {
+    const log = vi.fn();
+    await handleContact(req(fields()), { ...deps(), log });
+    const logged = JSON.stringify(log.mock.calls);
+    expect(logged).toContain('contact.sent');
+    expect(logged).not.toContain('alex@example.com');
+    expect(logged).not.toContain('delivery rhythm');
   });
 
   it('returns field errors for invalid input (422) and sends nothing', async () => {
@@ -104,6 +146,52 @@ describe('handleContact', () => {
   it('rejects oversized bodies (413)', async () => {
     const res = await handleContact(req(fields({ message: 'x'.repeat(MAX_BODY_BYTES) })), deps());
     expect(res.status).toBe(413);
+  });
+
+  it('enforces the size limit while streaming, even without a Content-Length header', async () => {
+    let pulled = 0;
+    const chunk = new TextEncoder().encode('message=' + 'x'.repeat(8_000));
+    const stream = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulled++;
+        if (pulled > 100) controller.close();
+        else controller.enqueue(chunk);
+      },
+    });
+    const r = new Request('https://www.fundexglobal.vc/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded', accept: 'application/json' },
+      body: stream,
+      // @ts-expect-error Node's undici requires duplex for streamed request bodies
+      duplex: 'half',
+    });
+    const res = await handleContact(r, deps());
+    expect(res.status).toBe(413);
+    expect(pulled).toBeLessThan(10); // stopped reading early instead of buffering 800 KB
+  });
+
+  it('requires a shared rate-limit store in production (503) unless explicitly overridden', async () => {
+    const prod = { ...configured, VERCEL_ENV: 'production' };
+    const noStore = { env: prod, now: () => NOW, fetchImpl: okFetch() as unknown as typeof fetch };
+    expect((await handleContact(req(fields()), noStore)).status).toBe(503);
+    const override = { ...noStore, env: { ...prod, RATE_LIMIT_ALLOW_MEMORY: 'true' } };
+    expect((await handleContact(req(fields(), { ip: '192.0.2.50' }), override)).status).toBe(200);
+  });
+
+  it('falls back to memory limits (not open) when the shared store fails', async () => {
+    const broken = { kind: 'upstash' as const, hit: vi.fn(async () => { throw new Error('down'); }) };
+    const d = { ...deps({}), store: broken };
+    const statuses: number[] = [];
+    for (let i = 0; i < 6; i++) statuses.push((await handleContact(req(fields(), { ip: '192.0.2.99' }), d)).status);
+    expect(statuses.at(-1)).toBe(429);
+  });
+
+  it('prefers the platform client address over forwarded headers', async () => {
+    const { getClientIp } = await import('../../src/lib/contact/handler');
+    const r = req(fields(), { ip: '6.6.6.6' });
+    expect(getClientIp(r, '203.0.113.7')).toBe('203.0.113.7');
+    expect(getClientIp(r, '127.0.0.1')).toBe('6.6.6.6');
+    expect(getClientIp(r, undefined)).toBe('6.6.6.6');
   });
 
   it('rejects unsupported content types (415) and malformed JSON (400)', async () => {
