@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Mail } from 'lucide-react';
+import { Linkedin, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function Footer() {
@@ -13,19 +13,19 @@ function Footer() {
               Fund'ex
             </h3>
             <p className="text-slate-400 text-sm leading-relaxed max-w-md">
-              Operating at the intersection of capital, strategy, and execution.
-              Building enduring companies from first cheque to final exit.
+              Operating at the intersection of strategy and execution.
+              Helping founders build enduring companies.
             </p>
             <div className="flex space-x-3 mt-6">
               {[
-                { icon: Linkedin, label: 'LinkedIn' },
-                { icon: Twitter, label: 'Twitter' },
-                { icon: Mail, label: 'Email' },
-              ].map(({ icon: Icon, label }) => (
+                { icon: Linkedin, label: 'Fundex Global on LinkedIn', href: 'https://www.linkedin.com/company/111150296/' },
+                { icon: Mail, label: 'Email info@fundexglobal.vc', href: 'mailto:info@fundexglobal.vc' },
+              ].map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
                   aria-label={label}
+                  {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   className="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 hover:border-teal-600/50 hover:bg-teal-600/10 flex items-center justify-center text-slate-400 hover:text-teal-400 transition-all duration-200"
                 >
                   <Icon size={17} />
@@ -58,27 +58,27 @@ function Footer() {
           <div>
             <h4 className="text-sm font-medium mb-5 text-slate-200 tracking-wide">Focus Areas</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
-              <li>Venture Capital</li>
               <li>Strategic Advisory</li>
-              <li>Business Brokerage</li>
-              <li>M&A Transactions</li>
+              <li>Business Planning</li>
+              <li>Partnerships &amp; Growth</li>
             </ul>
           </div>
         </div>
 
         <div className="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-500 text-sm">
-            © {currentYear} Fund'ex. All rights reserved.
+          <p className="text-slate-400 text-sm">
+            © {currentYear} Fundex Global Pty Ltd · ABN 49 694 783 205. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-slate-500 hover:text-slate-300 text-sm transition-colors duration-200">
+            <Link to="/privacy" className="text-slate-400 hover:text-slate-200 text-sm transition-colors duration-200">
               Privacy Policy
-            </a>
-            <a href="#" className="text-slate-500 hover:text-slate-300 text-sm transition-colors duration-200">
-              Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
+        <p className="mt-6 text-slate-400 text-xs leading-relaxed max-w-4xl">
+          Fund'ex provides strategy, business planning and execution support. We do not provide financial
+          product advice, make investment recommendations, or arrange or deal in investments.
+        </p>
       </div>
     </footer>
   );

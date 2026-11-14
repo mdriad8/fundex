@@ -1,3 +1,341 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Motion system. Everything here is switched off for visitors who
+   ask their device for reduced motion.
+   --------------------------------------------------------------- */
+
+
+/* Scroll reveal (used by <Reveal>) */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal[data-variant='left'] {
+  transform: translate3d(-36px, 0, 0);
+}
+.reveal[data-variant='right'] {
+  transform: translate3d(36px, 0, 0);
+}
+.reveal[data-variant='zoom'] {
+  transform: scale(0.94);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Headline word-by-word reveal */
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.6em, 0) rotate(2deg);
+  filter: blur(8px);
+  animation: word-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--word-delay, 0ms);
+}
+@keyframes word-in {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* Gradient shimmer text */
+.text-shimmer {
+  background-image: linear-gradient(100deg, #2dd4bf 0%, #22d3ee 30%, #a5f3fc 45%, #22d3ee 60%, #2dd4bf 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 10s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Words that both reveal and shimmer need both animations on one element */
+.word.text-shimmer {
+  animation:
+    word-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--word-delay, 0ms) forwards,
+    shimmer 10s ease-in-out infinite;
+}
+
+/* Fade-up for hero supporting elements */
+.fade-up {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--fade-delay, 0ms);
+}
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Cursor spotlight on cards (used by <Spotlight>) */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(20, 184, 166, 0.08), transparent 45%);
+  z-index: -1;
+}
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(45, 212, 191, 0.45), transparent 60%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Button light sweep */
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+}
+.btn-sheen:hover::after {
+  animation: sheen 0.9s ease-out;
+}
+@keyframes sheen {
+  from {
+    left: -60%;
+  }
+  to {
+    left: 130%;
+  }
+}
+
+/* Infinite capability ticker (used by <Marquee>) */
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Slow floating glow blobs */
+.float-slow {
+  animation: float 14s ease-in-out infinite;
+}
+.float-slower {
+  animation: float 20s ease-in-out infinite reverse;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(40px, -30px, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-30px, 25px, 0) scale(0.95);
+  }
+}
+
+/* Scroll cue */
+.scroll-cue {
+  animation: scroll-cue 2.2s ease-in-out infinite;
+}
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+/* Page enter transition */
+.page-enter {
+  animation: page-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* Cinematic service visuals */
+@keyframes cine-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes cine-needle {
+  0%,
+  100% {
+    transform: rotate(-28deg);
+  }
+  50% {
+    transform: rotate(32deg);
+  }
+}
+@keyframes cine-fan-0 {
+  0%,
+  100% {
+    transform: rotate(-4deg) translateY(10px);
+  }
+  50% {
+    transform: rotate(-16deg) translate(-26px, 6px);
+  }
+}
+@keyframes cine-fan-1 {
+  0%,
+  100% {
+    transform: rotate(3deg) translateY(6px);
+  }
+  50% {
+    transform: rotate(14deg) translate(26px, 4px);
+  }
+}
+@keyframes cine-fan-2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes cine-line {
+  0%,
+  100% {
+    transform: scaleX(0.35);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+}
+@keyframes cine-draw {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  60%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes cine-flow {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+@keyframes cine-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .word,
+  .fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .cine-anim,
+  .text-shimmer,
+  .btn-sheen::after,
+  .marquee-track,
+  .float-slow,
+  .float-slower,
+  .scroll-cue,
+  .page-enter {
+    animation: none !important;
+  }
+}

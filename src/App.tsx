@@ -1,41 +1,51 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollProgress from './components/fx/ScrollProgress';
+import SmoothScroll from './components/cinema/SmoothScroll';
 
+import { lazy, Suspense } from 'react';
 import Home from './pages/Home';
-import Services from './pages/Services';
-import Approach from './pages/Approach';
-import About from './pages/About';
-import Contact from './pages/Contact';
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
+// Other pages load on demand so the home page ships less JavaScript.
+const Services = lazy(() => import('./pages/Services'));
+const Approach = lazy(() => import('./pages/Approach'));
+const About = lazy(() => import('./pages/About'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pathname]);
-
-  return null;
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <div key={location.pathname} className="page-enter">
+      <Suspense fallback={<div className="min-h-screen bg-slate-950" />}>
+      <Routes location={location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/approach" element={<Approach />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      </Suspense>
+    </div>
+  );
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      <SmoothScroll />
+      <ScrollProgress />
 
       <div className="min-h-screen bg-slate-950 text-slate-100">
         <Header />
 
-        <main className="min-h-screen">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/approach" element={<Approach />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+        <main id="main" className="min-h-screen">
+          <AnimatedRoutes />
         </main>
 
         <Footer />

@@ -1,7 +1,6 @@
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/logo.png';
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,14 +10,21 @@ function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('keydown', handleKey);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKey);
+    };
   }, []);
 
   const navClass = ({ isActive }: { isActive: boolean }) => {
     const base = 'relative px-4 py-2 text-sm font-light tracking-wide transition-all duration-200';
     if (isScrolled) {
-      return `${base} ${isActive ? 'text-teal-600' : 'text-gray-700 hover:text-teal-600'}`;
+      return `${base} ${isActive ? 'text-teal-300' : 'text-slate-300 hover:text-white'}`;
     }
     return `${base} ${isActive ? 'text-white' : 'text-slate-300 hover:text-white'}`;
   };
@@ -34,7 +40,7 @@ function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm shadow-black/5'
+          ? 'bg-slate-950/75 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20'
           : 'bg-white/10 backdrop-blur-md border-b border-white/10'
       }`}
     >
@@ -42,7 +48,18 @@ function Header() {
         <div className="flex items-center justify-between h-16 sm:h-20">
 
           <NavLink to="/" className="hover:opacity-75 transition-opacity duration-200">
-            <img src={logo} alt="Fund'ex" className="h-10 sm:h-14 w-auto" />
+            <picture>
+              <source srcSet="/logo.webp" type="image/webp" />
+              <img
+                src="/logo.png"
+                alt="Fund'ex"
+                width={440}
+                height={135}
+                {...{ fetchpriority: "high" }}
+                decoding="async"
+                className="h-10 sm:h-14 w-auto"
+              />
+            </picture>
           </NavLink>
 
           <div className="hidden md:flex items-center space-x-1">
@@ -67,9 +84,11 @@ function Header() {
           </div>
 
           <button
-            className={`md:hidden transition-colors duration-200 p-2 rounded-lg ${isScrolled ? 'text-gray-700 hover:text-teal-600 hover:bg-teal-50' : 'text-slate-300 hover:text-white hover:bg-white/8'}`}
+            className={`md:hidden transition-colors duration-200 p-2 rounded-lg ${isScrolled ? 'text-slate-200 hover:text-white hover:bg-white/10' : 'text-slate-300 hover:text-white hover:bg-white/8'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -77,7 +96,7 @@ function Header() {
       </nav>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white backdrop-blur-xl border-b border-gray-200">
+        <div id="mobile-menu" className="md:hidden bg-white backdrop-blur-xl border-b border-gray-200">
           <div className="px-4 py-4 space-y-1">
             <NavLink to="/" end className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink>
             <NavLink to="/services" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Services</NavLink>

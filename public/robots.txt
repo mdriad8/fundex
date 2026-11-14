@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://fundexglobal.vc/sitemap.xml
+Sitemap: https://www.fundexglobal.vc/sitemap.xml

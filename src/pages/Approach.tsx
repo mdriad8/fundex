@@ -1,5 +1,8 @@
 import { Eye, Zap, Layers, Target, Users2, LineChart } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import HeroCanvas from '../components/fx/HeroCanvas';
+import Reveal from '../components/fx/Reveal';
+import Spotlight from '../components/fx/Spotlight';
 import { Link } from 'react-router-dom';
 
 function Approach() {
@@ -9,12 +12,12 @@ function Approach() {
       title: 'Vision',
       subtitle: 'We back ideas with long-term relevance',
       description:
-        'Short-term thinking builds fragile companies. We invest in businesses solving meaningful problems with sustainable competitive advantages. Our horizon is measured in decades, not exit windows.',
+        'Short-term thinking builds fragile companies. We work with businesses solving meaningful problems with sustainable competitive advantages. Our horizon is measured in decades, not quarters.',
       details: [
         'Focus on structural market shifts',
         'Prioritize defensible moats',
         'Value mission-driven founders',
-        'Long-term capital allocation',
+        'Long-term planning',
       ],
     },
     {
@@ -22,11 +25,11 @@ function Approach() {
       title: 'Velocity',
       subtitle: 'We move with purpose, not noise',
       description:
-        'Speed matters, but direction matters more. We make decisive moves based on deep conviction and thorough diligence. No bureaucracy, no committees — just clear thinking and fast execution.',
+        'Speed matters, but direction matters more. We make decisive moves based on clear thinking and careful analysis. No bureaucracy, no committees — just focused execution.',
       details: [
         'Streamlined decision-making',
         'Direct founder access',
-        'Rapid deployment capability',
+        'Fast, focused decisions',
         'Bias toward action',
       ],
     },
@@ -35,7 +38,7 @@ function Approach() {
       title: 'Scalability',
       subtitle: 'We build systems that last',
       description:
-        'Growth without infrastructure is chaos. We help founders build organizations designed to scale — from hiring frameworks to operational systems to capital planning.',
+        'Growth without infrastructure is chaos. We help founders build organisations designed to scale — from hiring frameworks to operational systems to business planning.',
       details: [
         'Operational excellence focus',
         'Scalable team structures',
@@ -51,31 +54,30 @@ function Approach() {
       step: '01',
       title: 'Discovery',
       description:
-        'We begin with deep conversations about your vision, market opportunity, and capital needs. No templates, no generic pitches — just honest dialogue about where you are and where you want to go.',
+        'We begin with deep conversations about your vision, market opportunity, and goals. No templates, no generic pitches — just honest dialogue about where you are and where you want to go.',
     },
     {
       icon: Users2,
       step: '02',
-      title: 'Evaluation',
+      title: 'Strategy',
       description:
-        'Our diligence is thorough but respectful. We assess market dynamics, competitive positioning, team capability, and financial fundamentals. We move quickly and communicate transparently throughout.',
+        'We assess market dynamics, competitive positioning, team capability, and business fundamentals, then agree a clear plan and scope with you. We communicate transparently throughout.',
     },
     {
       icon: LineChart,
       step: '03',
       title: 'Partnership',
       description:
-        'Once aligned, we move fast. Clean term sheets, founder-friendly structures, and rapid deployment. Then the real work begins — we roll up our sleeves and help you build.',
+        'Once aligned, we move fast. Scope and fees are agreed in writing, then the real work begins — we roll up our sleeves and help you build.',
     },
   ];
 
   return (
     <div className="pt-20">
       <Helmet>
-        <title>Our Approach | Strategic Startup Investment | Fundex Global</title>
-        <meta name="description" content="Discover Fundex Global's investment approach focused on innovation, founder partnerships, strategic guidance, scalable growth, and long-term startup success." />
-        <meta name="keywords" content="investment strategy, startup approach, venture capital strategy, founder partnership, startup innovation, scalable business growth" />
-        <link rel="canonical" href="https://fundexglobal.vc/approach" />
+        <title>Our Approach | How We Work With Founders | Fundex Global</title>
+        <meta name="description" content="How Fundex Global works with founders: vision, velocity and scalability, and a clear process from discovery to strategy to hands-on partnership." />
+        <link rel="canonical" href="https://www.fundexglobal.vc/approach" />
       </Helmet>
 
       {/* Hero */}
@@ -85,7 +87,8 @@ function Approach() {
         {/* Grid overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-        <div className="relative max-w-4xl mx-auto text-center w-full">
+        <HeroCanvas density={5} />
+        <div className="relative max-w-4xl mx-auto text-center w-full fade-up">
           <div className="mb-5 sm:mb-6">
             <span className="inline-block px-4 sm:px-5 py-2 bg-teal-500/10 border border-teal-500/30 rounded-full text-teal-400 text-xs sm:text-sm font-light tracking-widest">
               Our Approach
@@ -99,8 +102,8 @@ function Approach() {
             </span>
           </h1>
           <p className="text-base sm:text-xl text-slate-400 leading-relaxed px-2">
-            Our investment philosophy isn't about trends or hype. It's about identifying
-            exceptional founders and backing them with patient, strategic capital.
+            Our philosophy isn't about trends or hype. It's about working closely with
+            exceptional founders and helping them turn strategy into execution.
           </p>
         </div>
       </section>
@@ -109,7 +112,7 @@ function Approach() {
       <section className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-6xl mx-auto space-y-16 lg:space-y-24">
           {principles.map((principle, index) => (
-            <div
+            <Reveal
               key={index}
               className={`flex flex-col ${
                 index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
@@ -122,7 +125,7 @@ function Approach() {
 
                 <div>
                   <h2 className="text-3xl sm:text-4xl font-light mb-2 text-slate-900">{principle.title}</h2>
-                  <p className="text-teal-600 text-base sm:text-xl font-light">{principle.subtitle}</p>
+                  <p className="text-teal-700 text-base sm:text-xl font-light">{principle.subtitle}</p>
                 </div>
 
                 <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
@@ -131,7 +134,7 @@ function Approach() {
               </div>
 
               <div className="flex-1 w-full">
-                <div className="bg-teal-50/50 border border-teal-100 rounded-2xl p-6 sm:p-8 hover:border-teal-400/40 transition-all duration-300">
+                <Spotlight className="bg-teal-50/50 border border-teal-100 rounded-2xl p-6 sm:p-8 hover:border-teal-400/40 transition-all duration-300">
                   <h3 className="text-base sm:text-lg font-medium mb-5 sm:mb-6 text-slate-700">In Practice</h3>
                   <div className="space-y-3">
                     {principle.details.map((detail, idx) => (
@@ -144,9 +147,9 @@ function Approach() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </Spotlight>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -164,8 +167,8 @@ function Approach() {
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             {process.map((item, index) => (
-              <div key={index} className="relative group mt-4">
-                <div className="bg-white/[0.08] border border-white/10 rounded-2xl p-6 sm:p-8 h-full hover:border-teal-400/40 hover:bg-white/[0.12] transition-all duration-300">
+              <Reveal delay={index * 150} key={index} className="relative group mt-4">
+                <Spotlight className="bg-white/[0.08] border border-white/10 rounded-2xl p-6 sm:p-8 h-full hover:border-teal-400/40 hover:bg-white/[0.12] transition-all duration-300">
                   <div className="absolute -top-4 left-6 sm:left-8 px-4 py-1 bg-teal-500 text-white text-sm font-medium rounded-full shadow-lg shadow-teal-600/20">
                     {item.step}
                   </div>
@@ -176,12 +179,12 @@ function Approach() {
 
                   <h3 className="text-xl sm:text-2xl font-light mb-3 sm:mb-4 text-white">{item.title}</h3>
                   <p className="text-slate-400 leading-relaxed text-sm sm:text-base">{item.description}</p>
-                </div>
+                </Spotlight>
 
                 {index < process.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-teal-500/30 to-transparent" />
                 )}
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -190,43 +193,43 @@ function Approach() {
       {/* What Sets Us Apart */}
       <section className="py-14 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-teal-600 rounded-3xl p-6 sm:p-10 md:p-16">
+          <Reveal variant="zoom" className="bg-teal-700 rounded-3xl p-6 sm:p-10 md:p-16">
             <div className="max-w-3xl">
               <h2 className="text-3xl sm:text-4xl font-light mb-5 sm:mb-6 text-white">What Sets Us Apart</h2>
               <div className="space-y-5 sm:space-y-6 text-white/85 leading-relaxed text-base sm:text-lg">
                 <p>
-                  We're not a traditional venture firm obsessed with quick flips or portfolio size.
-                  We're operators who became investors because we saw the gap between capital and real support.
+                  We're not a traditional consultancy that hands over a report and walks away.
+                  We saw the gap between good advice and real support, and we built Fund'ex to close it.
                 </p>
                 <p>
-                  Every partner at Fund'ex has built, scaled, and exited companies. We've been in your seat.
-                  We know what keeps you up at night, and more importantly, we know how to help.
+                  We stay involved from the first conversation through to execution, so the plan
+                  actually gets done.
                 </p>
                 <p>
-                  Our portfolio is intentionally concentrated. We take fewer bets and invest more time.
-                  When we partner with you, you get our full attention — not just our capital.
+                  We are intentionally focused. We take on fewer clients and invest more time.
+                  When we partner with you, you get our full attention.
                 </p>
               </div>
 
               <div className="mt-8 sm:mt-10 pt-8 sm:pt-10 border-t border-white/25">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
                   {[
-                    { value: '5-10', label: 'Active investments per year' },
-                    { value: '87%', label: 'Founder-led board seats' },
-                    { value: '2+ yrs', label: 'Average hold period' },
-                    { value: '24/7', label: 'Founder access' },
+                    { value: 'Focused', label: 'A small number of clients at a time' },
+                    { value: 'Founder-led', label: 'You work with the person responsible' },
+                    { value: 'In writing', label: 'Scope and fees agreed up front' },
+                    { value: 'Hands-on', label: 'Involved through execution' },
                   ].map((stat, i) => (
                     <div key={i}>
-                      <div className="text-2xl sm:text-3xl font-light text-white mb-1">
+                      <div className="text-xl sm:text-2xl font-light text-white mb-1">
                         {stat.value}
                       </div>
-                      <div className="text-white/75 text-xs sm:text-sm leading-snug">{stat.label}</div>
+                      <div className="text-white/90 text-xs sm:text-sm leading-snug">{stat.label}</div>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -239,7 +242,7 @@ function Approach() {
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center px-6 sm:px-8 py-3.5 sm:py-4 bg-teal-600 hover:bg-teal-500 text-white rounded-xl shadow-lg shadow-teal-600/20 hover:shadow-teal-600/35 transition-all duration-300 text-base sm:text-lg cursor-pointer"
+            className="inline-flex items-center px-6 sm:px-8 py-3.5 sm:py-4 bg-teal-700 hover:bg-teal-600 text-white rounded-xl shadow-lg shadow-teal-600/20 hover:shadow-teal-600/35 transition-all duration-300 text-base sm:text-lg cursor-pointer"
           >
             Get in Touch
           </Link>
