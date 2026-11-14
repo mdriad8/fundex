@@ -1,0 +1,225 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Steps from '../components/Steps.astro';
+import { site, services } from '../data/site';
+
+const description =
+  'Strategy and venture design, execution and growth support, investment readiness, and partnerships: how Fundex Global helps founders and growing businesses.';
+
+const faqs = [
+  {
+    q: 'Are you an investor or a fund?',
+    a: 'No. Fundex Global is a strategy and execution partner. We do not invest client money, manage funds, make investment recommendations or arrange investments.',
+  },
+  {
+    q: 'What happens after I get in touch?',
+    a: `We read every message. ${site.contact.responseTime} If there looks to be a fit, we suggest a short call to understand where you are and what you need.`,
+  },
+  {
+    q: 'How is an engagement priced?',
+    a: 'It depends on the scope. We agree the scope, the deliverables and the fees in writing before any work starts.',
+  },
+  {
+    q: 'Where do you work?',
+    a: `We are based in ${site.office.city}, ${site.office.country}, and can work with clients remotely.`,
+  },
+];
+
+const faqLd = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<Base
+  title="Services"
+  description={description}
+  path="/services"
+  crumbs={[{ name: 'Services', path: '/services' }]}
+  extraLd={[faqLd]}
+>
+  <PageHero
+    eyebrow="Services"
+    title="Strategy you can act on. Support to see it through."
+    lede="Four focused services for founders and growing businesses. Use one, or combine them as your business moves from idea to delivery."
+  >
+    <nav aria-label="Services on this page" class="jump">
+      <ul role="list">
+        {services.map((s) => <li><a href={`#${s.id}`}>{s.title}</a></li>)}
+        <li><a href="#how-we-work">How we work</a></li>
+      </ul>
+    </nav>
+  </PageHero>
+
+  {
+    services.map((s, i) => (
+      <section id={s.id} class:list={['section', 'service', i % 2 === 0 ? 'section--white' : 'service--alt']} aria-labelledby={`${s.id}-title`}>
+        <div class="container service__grid">
+          <div class="service__intro">
+            <p class="eyebrow">Service 0{i + 1}</p>
+            <h2 id={`${s.id}-title`}>{s.title}</h2>
+            <p class="lede">{s.summary}</p>
+            <p class="service__for">
+              <strong>Who it is for:</strong> {s.forWho}
+            </p>
+          </div>
+          <div class="service__detail">
+            <h3>What we do</h3>
+            <ul class="tick-list" role="list">
+              {s.activities.map((a) => <li>{a}</li>)}
+            </ul>
+            <h3>What you come away with</h3>
+            <ul class="tick-list" role="list">
+              {s.outcomes.map((o) => <li>{o}</li>)}
+            </ul>
+            {s.note && <p class="notice">{s.note}</p>}
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section id="how-we-work" class="section on-dark" aria-labelledby="hww-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How we work</p>
+        <h2 id="hww-title">From ambition to execution, in four steps</h2>
+        <p class="lede">Every engagement follows the same rhythm, whether it lasts a few weeks or continues over time.</p>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="scope-title">
+    <div class="container container--narrow">
+      <div class="section-head">
+        <p class="eyebrow">Clear scope</p>
+        <h2 id="scope-title">What we do not do</h2>
+      </div>
+      <p>{site.scopeStatement}</p>
+      <p class="scope-more">
+        If you need financial product advice, a valuation or help raising capital, speak to an appropriately licensed
+        professional. <a href="/legal">Read our full scope and terms</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container container--narrow">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-title">Common questions</h2>
+      </div>
+      <div class="faqs">
+        {
+          faqs.map((f) => (
+            <details class="faq">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Not sure which service fits?" text="Describe the situation in a few sentences. We will suggest where to start, even if that is not with us." />
+</Base>
+
+<style>
+  .jump ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+  .jump a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--navy-800);
+    border-radius: 999px;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+  .jump a:hover {
+    border-color: var(--gold-400);
+    color: var(--gold-300);
+  }
+  .service__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 900px) {
+    .service__grid {
+      grid-template-columns: 5fr 6fr;
+      gap: var(--space-8);
+    }
+  }
+  @media (min-width: 900px) {
+    .service--alt .service__grid {
+      grid-template-columns: 6fr 5fr;
+    }
+    .service--alt .service__intro {
+      order: 2;
+    }
+  }
+  .service--alt .service__detail {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+    box-shadow: var(--shadow-card);
+  }
+  .service__intro {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+  .service__for {
+    color: var(--ink);
+  }
+  .service__detail {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+  .service__detail h3:not(:first-child) {
+    margin-top: var(--space-4);
+  }
+  .scope-more {
+    margin-top: var(--space-4);
+    color: var(--muted);
+  }
+  .faqs {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .faq {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .faq summary {
+    cursor: pointer;
+    padding: var(--space-4) var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 700;
+    min-height: 44px;
+    list-style-position: outside;
+  }
+  .faq summary:focus-visible {
+    border-radius: var(--radius);
+  }
+  .faq p {
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--muted);
+  }
+</style>

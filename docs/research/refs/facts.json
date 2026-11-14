@@ -1,0 +1,627 @@
+{
+  "hexa.com": {
+    "url": "https://www.hexa.com/",
+    "title": "Hexa | startup studio building software companies",
+    "description": "Hexa is a startup studio partnering with founders to build ambitious companies. We're building in lots of different areas with only one focus: software.",
+    "ogImage": true,
+    "canonical": "https://www.hexa.com/",
+    "lang": "en",
+    "h1": [
+      "WHERE THE AMBITIOUS BUILD EXCEPTIONAL COMPANIES"
+    ],
+    "h2": [
+      "WHAT WE'VE BUILT",
+      "YOU'LL NEVER BUILD ALONE",
+      "YOU'LL NEVERBUILDALONE",
+      "BEHIND THE BUILD"
+    ],
+    "navLinks": [
+      "Start",
+      "Sprint",
+      "Scale",
+      "Companies",
+      "Team",
+      "Media",
+      "Apply to Start",
+      "Apply to Sprint",
+      "TEAM",
+      "MEDIA",
+      "Email",
+      "LinkedIn",
+      "Instagram",
+      "X"
+    ],
+    "ctas": [
+      "Start",
+      "Apply to Start",
+      "Apply to Sprint",
+      "FROM 0 TO 1 START Match with an idea, find your cofounder, get off the ground.",
+      "Partners",
+      "Story time with Guillaume Moubeche. The insider tips he shared about founder-led distribution At Hexa's latest Storytime in Paris, lemlist founder Guillaume Moubeche sat down with Hexa Partner Florent Quinti to explain how a €1,000 company…",
+      "La rentrée at Hexa: new Partners and our hardware push Clem Delangue's early days were at a Hexa company — this week Nvidia bought his startup for $12.9B"
+    ],
+    "fonts": [
+      "Inter",
+      "Pptalisman Condensed"
+    ],
+    "bg": "rgb(255, 255, 255)",
+    "jsonLd": [],
+    "footer": "BUILD THE EXCEPTIONAL HEXA Start Sprint Scale Companies Investors Team Careers ABOUT News Media Events FAQ SOCIAL LinkedIn Instagram x Youtube Email NEWSLETTER Subscribe",
+    "forms": 1,
+    "wordCount": 522
+  },
+  "www.foundersfactory.com": {
+    "url": "https://foundersfactory.com/",
+    "title": "Founders Factory: Venture Studio and Startup Accelerator - Founders Factory",
+    "description": "Founders Factory builds and funds startups together with exceptional entrepreneurs and the world’s leading companies",
+    "ogImage": true,
+    "canonical": "",
+    "lang": "en-gb",
+    "h1": [
+      "Power to founders",
+      "Partner with us. Co-found a startup or apply to one of our programs."
+    ],
+    "h2": [
+      "Founders Factory backs visionary founders with capital, dedicated support from a team of 60+ operators, and unrivalled access to a coalition of industry leading corporate partners.",
+      "Shaping the future of Fintech :: Health :: Industrials :: Deep Tech",
+      "VENTURE STUDIO",
+      "ACCELERATOR",
+      "We back founders from idea to seed - and beyond",
+      "Building and investing in future category leaders",
+      "STORIES & INSIGHTS",
+      "E-Commerce Software Startup Shop Circle Raises $120 Million | Forbes",
+      "E-Commerce Software Startup Shop Circle Raises $120 Million | Forbes",
+      "Dronamics: How the Rangelov Brothers’ dream of ultra-efficient cargo drones is taking flight",
+      "Dronamics: How the Rangelov Brothers’ dream of ultra-efficient cargo drones is taking flight",
+      "New Accelerator Seeks to Boost Neurotech Startups | Wall Street Journal",
+      "New Accelerator Seeks to Boost Neurotech Startups | Wall Street Journal",
+      "How Defence Needs Are Shaping Maritime Technology"
+    ],
+    "navLinks": [
+      "Venture Studio",
+      "Accelerator",
+      "Venture Funds",
+      "Partners",
+      "Fintech",
+      "Industrials",
+      "Health",
+      "Deep Tech",
+      "Portfolio",
+      "Careers",
+      "About us",
+      "Team",
+      "Our partners",
+      "Stories & Insights",
+      "Apply"
+    ],
+    "ctas": [
+      "Partners",
+      "Our partners",
+      "Apply",
+      "Learn more",
+      "Open Health Northwestern Medicine Healthcare Accelerator Apply",
+      "Open Fintech Aviva Fintech Accelerator Apply",
+      "Open Industrials Rio Tinto Mining Tech Accelerator Apply",
+      "Open Nature WA Government Nature Tech Accelerator Apply",
+      "E-Commerce Software Startup Shop Circle Raises $120 Million | Forbes"
+    ],
+    "fonts": [
+      "FoundersGrotesk",
+      "Helvetica Neue LT W05_43 Lt Ex"
+    ],
+    "bg": "rgb(255, 255, 255)",
+    "jsonLd": [],
+    "footer": "Founders Venture Studio Accelerator Venture Funds Partners Partner with us Focus areas Fintech Industrials Health Deep Tech Portfolio Our companies Company About us Team Our partners Careers Stories & insights Subscribe to our newsletter Monthly stories and insights from leading founders, investors and our team. Sign up © 2026 Founders Factory Ltd. All rights reserved",
+    "forms": 0,
+    "wordCount": 1713
+  },
+  "www.psl.com": {
+    "url": "https://www.psl.com/",
+    "title": "Pioneer Square Labs",
+    "description": "",
+    "ogImage": true,
+    "canonical": "https://www.psl.com/",
+    "lang": "En",
+    "h1": [
+      "We partner with founders",
+      "We partner with founders"
+    ],
+    "h2": [
+      "Meet Our Companies"
+    ],
+    "navLinks": [],
+    "ctas": [
+      "Startup Studio"
+    ],
+    "fonts": [
+      "Aeonik"
+    ],
+    "bg": "rgb(37, 36, 35)",
+    "jsonLd": [
+      "Corporation"
+    ],
+    "footer": "",
+    "forms": 1,
+    "wordCount": 142
+  },
+  "www.highalpha.com": {
+    "url": "https://www.highalpha.com/",
+    "title": "High Alpha | A B2B SaaS Venture Firm",
+    "description": "A venture firm that creates and funds B2B SaaS companies. We build with founders to go faster and further together.",
+    "ogImage": true,
+    "canonical": "",
+    "lang": "en",
+    "h1": [
+      "Building with Founders to Go Faster and Further"
+    ],
+    "h2": [
+      "Capital",
+      "Studio",
+      "We’ve Founded and Funded Businesses Coast-to-Coast and Everywhere in Between",
+      "2026 Startup Benchmarks Survey",
+      "Subscribe to Our Newsletter to Stay in Touch with the Latest"
+    ],
+    "navLinks": [
+      "Capital",
+      "Studio",
+      "Companies",
+      "Team",
+      "About",
+      "Startup Benchmarks Survey"
+    ],
+    "ctas": [
+      "Startup Benchmarks Survey"
+    ],
+    "fonts": [
+      "Neue Montreal"
+    ],
+    "bg": "rgb(246, 246, 246)",
+    "jsonLd": [],
+    "footer": "Home Careers Portfolio Careers News Blog Events SaaS Benchmarks Report X LinkedIn Instagram Subscribe to Our Newsletter to Stay in Touch with the Latest © 2025 High Alpha. All rights reserved. 830 Massachusetts Avenue, Indianapolis, IN 46204 Privacy",
+    "forms": 1,
+    "wordCount": 225
+  },
+  "rainmaking.io": {
+    "url": "https://www.rainmaking.io/",
+    "title": "Rainmaking",
+    "description": "For nearly two decades, Rainmaking has helped ambitious companies, governments, and regions turn entrepreneurship into scaled growth.",
+    "ogImage": true,
+    "canonical": "https://www.rainmaking.io/",
+    "lang": "en",
+    "h1": [
+      "Build your next",
+      "growth engine"
+    ],
+    "h2": [
+      "$10b+",
+      "1800+",
+      "85+",
+      "5",
+      "Schedule a discovery call with our team"
+    ],
+    "navLinks": [
+      "Work",
+      "Contact us"
+    ],
+    "ctas": [
+      "Contact us",
+      "Get in touch",
+      "A systematic process to identify where to focus for new growth, what specific plays unlock it, and how to win across build/partner/buy. Opportunity Mapping",
+      "A lean startup, entrepreneurial approach that de-risks the building and launching of new products, services and ventures. New Ventures",
+      "Identify, partner with, and collaborate with startups, or create JVs with corporates, to unlock strategic impact & financial returns. Strategic Partnership",
+      "Identify and invest in or acquire high potential startups and growth businesses relevant to the future of your industry and adjacent growth areas. Venture Investing",
+      "NEWS Meta and Startupbootcamp Launch Llama Design Drive 2025",
+      "Book a call",
+      "Strategic Partnership",
+      "Contact",
+      "Startup Bootcamp"
+    ],
+    "fonts": [
+      "sans-serif",
+      "Geist"
+    ],
+    "bg": "rgb(255, 255, 255)",
+    "jsonLd": [],
+    "footer": "",
+    "forms": 0,
+    "wordCount": 388
+  },
+  "www.antler.co": {
+    "url": "https://www.antler.co/",
+    "title": "Antler | Where Founders Go Further, Faster",
+    "description": "Antler is the world’s most active early-stage investor, backing exceptional founders from inception.",
+    "ogImage": true,
+    "canonical": "",
+    "lang": "en",
+    "h1": [
+      "Antler is a global early-stage VC investing in the world's best founders from first check to IPO."
+    ],
+    "h2": [
+      "Asia Pacific",
+      "Europe",
+      "Americas",
+      "Middle East and Africa",
+      "ANTLER INSIGHTS",
+      "FOUNDER STORIES",
+      "FURTHER —FASTER",
+      "Further—faster",
+      "AI founders",
+      "For investors",
+      "PORTFOLIO",
+      "Find your location",
+      "BUILD AND SCALE A CATEGORY-DEFINING COMPANY",
+      "FOUNDER —STORIES"
+    ],
+    "navLinks": [
+      "Skip to main content",
+      "Portfolio",
+      "Investors",
+      "About",
+      "Founder Login",
+      "Pitch Us",
+      "AustraliaOpen in a new tab",
+      "IndiaOpen in a new tab",
+      "IndonesiaOpen in a new tab",
+      "JapanOpen in a new tab",
+      "KoreaOpen in a new tab",
+      "MalaysiaOpen in a new tab",
+      "SingaporeOpen in a new tab",
+      "VietnamOpen in a new tab",
+      "UKOpen in a new tab",
+      "Continental EuropeOpen in a new tab",
+      "NordicsOpen in a new tab",
+      "BrazilOpen in a new tab",
+      "CanadaOpen in a new tab",
+      "USOpen in a new tab",
+      "KenyaOpen in a new tab",
+      "NigeriaOpen in a new tab",
+      "Saudi ArabiaOpen in a new tab",
+      "United Arab EmiratesOpen in a new tab",
+      "Visit Antler insights"
+    ],
+    "ctas": [
+      "View cohort start dates",
+      "Facebook"
+    ],
+    "fonts": [
+      "Satoshi"
+    ],
+    "bg": "rgb(249, 247, 245)",
+    "jsonLd": [
+      "Organization",
+      "FinancialService"
+    ],
+    "footer": "© 2026 Copyright. All Rights Reserved. LOCATIONS Australia Brazil Canada Denmark Finland France Germany India Indonesia Japan Kenya Korea Malaysia Netherlands Nigeria Norway Singapore Sweden UK US Vietnam United Arab Emirates Saudi Arabia INVESTORS Investors Investors portal Sustainability Antler Elevate ABOUT Insights Portfolio Careers Portfolio Jobs Newsroom Privacy Policy Fraud Disclaimer Report a Concern SOCIALS Instagram Facebook LinkedIn YouTube X / Twitter",
+    "forms": 0,
+    "wordCount": 775
+  },
+  "www.betatron.co": {
+    "url": "https://betatron.co/",
+    "title": "Betatron Venture Group",
+    "description": "",
+    "ogImage": true,
+    "canonical": "https://betatron.co/",
+    "lang": "en-US",
+    "h1": [],
+    "h2": [
+      "Investing in exit-focused B2B startups from Hong Kong and Singapore",
+      "Toku IPO, 2026",
+      "Why Betatron?"
+    ],
+    "navLinks": [
+      "Skip to Content",
+      "Home",
+      "Portfolio",
+      "Team",
+      "Blog",
+      "Podcasts",
+      "FAQ'S",
+      "Careers",
+      "Contact",
+      "Invest",
+      "Send us your deck"
+    ],
+    "ctas": [
+      "Contact"
+    ],
+    "fonts": [
+      "Poppins",
+      "Manrope"
+    ],
+    "bg": "rgb(0, 0, 0)",
+    "jsonLd": [
+      "WebSite"
+    ],
+    "footer": "Betatron Venture Group Copyright © 2026 · Betatron Venture Group. All Rights Reserved",
+    "forms": 0,
+    "wordCount": 627
+  },
+  "atomic.vc": {
+    "url": "https://www.atomic.vc/",
+    "title": "Atomic | Come build the next great company",
+    "description": "We bring ideas, capital, and talent together, partnering with co-founders to build the best ideas into great companies.",
+    "ogImage": true,
+    "canonical": "",
+    "lang": "en",
+    "h1": [
+      "Come build the next great company",
+      "Get in touch"
+    ],
+    "h2": [
+      "A different kind of co-founder.",
+      "Your built-in founding team",
+      "Latest insights",
+      "Come build with us.",
+      "Ready tostart building?",
+      "Hannan Parvizian",
+      "Benjamin Gleitzman",
+      "Healey Cypher",
+      "Kartik Hosanagar",
+      "Dylan Serota",
+      "Bobby Marhamat",
+      "Gadi Shamia",
+      "Vijay Menon",
+      "Andrew Collins"
+    ],
+    "navLinks": [
+      "Build with us"
+    ],
+    "ctas": [
+      "Join a team",
+      "Join",
+      "Get in touch",
+      "Join a Team",
+      "A Brown Man in Russia: Lessons Learned on the Trans-Siberian",
+      "joinfound.com"
+    ],
+    "fonts": [
+      "Messinasans"
+    ],
+    "bg": "rgb(248, 245, 242)",
+    "jsonLd": [],
+    "footer": "Come build with us. Get in touch Site Map Home Team Companies News Blog Co-Found with Us Join a Team Contact info@atomic.vc careers@atomic.vc PRIVACY POLICY © 2026 ATOMIC",
+    "forms": 1,
+    "wordCount": 373
+  },
+  "www.joinef.com": {
+    "url": "https://www.joinef.com/",
+    "title": "Found, don't follow | Entrepreneurs First",
+    "description": "We turn exceptional individuals into funded founders. We back you first, then give you a bridge to Silicon Valley.",
+    "ogImage": true,
+    "canonical": "https://www.joinef.com/",
+    "lang": "en",
+    "h1": [
+      "FOUND, DON'T FOLLOW"
+    ],
+    "h2": [],
+    "navLinks": [
+      "[START]",
+      "Apply",
+      "Insights",
+      "FAQs",
+      "[MENU]",
+      "About us",
+      "Portfolio",
+      "Careers",
+      "Entrepreneurs First",
+      "APPLY",
+      "INSIGHTS",
+      "FAQS",
+      "ABOUT US",
+      "PORTFOLIO",
+      "CAREERS"
+    ],
+    "ctas": [
+      "[START]",
+      "Apply",
+      "APPLY",
+      "APPLY HERE"
+    ],
+    "fonts": [
+      "neue-haas-grotesk-display",
+      "PS Times"
+    ],
+    "bg": "rgb(223, 234, 234)",
+    "jsonLd": [
+      "WebPage",
+      "BreadcrumbList",
+      "WebSite"
+    ],
+    "footer": "",
+    "forms": 0,
+    "wordCount": 1010
+  },
+  "www.startmate.com.au": {
+    "url": "https://www.startmate.com/",
+    "title": "Startmate",
+    "description": "Startmate backs ANZ's most ambitious founders with $120k, a 14-week Accelerator and mentors who invest. Summer '27 applications close 8 November.",
+    "ogImage": true,
+    "canonical": "https://www.startmate.com/",
+    "lang": "en",
+    "h1": [
+      "STARTMATE NATION: THE BEST PLACE IN THE WORLD TO BUILD A STARTUP"
+    ],
+    "h2": [
+      "Welcome to ANZ's most ambitious, talented and diverse tech community.",
+      "TAKE YOUR STARTUP TO THE NEXT LEVEL",
+      "INVEST IN ANZ’S TOP STARTUPS",
+      "BUILD YOUR NETWORK OR LAND A JOB",
+      "STARTMATE IS BUILDING THE ECOSYSTEM THAT STARTUPS NEED TO THRIVE IN OUR OWN BACKYARD",
+      "OUR COMMUNITY",
+      "HEAR IT FROM THEM",
+      "ESSENTIAL READS"
+    ],
+    "navLinks": [
+      "FoundersFounders",
+      "AcceleratorAccelerator",
+      "OPEN HOUSEOPEN HOUSE",
+      "InvestorsInvestors",
+      "First BelieversFirst Believers",
+      "OperatorsOperators",
+      "Student Founder BootcampStudent Founder Bootcamp",
+      "Explore all",
+      "SUMMER '27 ACCELERATOR APPLICATIONS OPEN NOW. APPLY HERE.",
+      "Read moreRead more",
+      "INVEST INVEST",
+      "WritingWriting",
+      "eventsevents",
+      "MerchMerch",
+      "mentorSmentors",
+      "refer a founderrefer a founder",
+      "partner with uspartner with us",
+      "PORTFOLIO PORTFOLIO",
+      "Our storyOur story",
+      "teamteam",
+      "FAQFAQ",
+      "APPLY TO ACCELERATOR APPLY TO ACCELERATOR"
+    ],
+    "ctas": [
+      "SUMMER '27 ACCELERATOR APPLICATIONS OPEN NOW. APPLY HERE.",
+      "partner with uspartner with us",
+      "APPLY TO ACCELERATOR APPLY TO ACCELERATOR",
+      "LEARN MORE LEARN MORE",
+      "From $0 to $4.5 Billion: How the Startmate Pay-It-Forward Mentorship Model Built a Startup Powerhouse",
+      "Top 20 Startmate companies"
+    ],
+    "fonts": [
+      "Otsono"
+    ],
+    "bg": "rgb(255, 255, 255)",
+    "jsonLd": [
+      "Organization",
+      "WebSite",
+      "WebPage"
+    ],
+    "footer": "STAY IN THE LOOP Subscribe to our fortnightly newsletter for exclusive content, portfolio wins, key program dates, must-attend event info and peeks inside Startmate HQ. QUICK LINKS HOMEPAGE HOMEPAGE OUR STORY OUR STORY TEAM TEAM INVEST INVEST INVESTOR PORTAL INVESTOR PORTAL PORTFOLIO PORTFOLIO FAQ FAQ CONTACT US CONTACT US COMMUNITY WRITING WRITING EVENTS EVENTS MENTOR MENTOR PARTNER WITH US PARTNER WITH US OFFERINGS FOUNDERS FOUNDERS INVESTORS INVESTORS OPERATORS OPERATORS EXPLORE ALL EXPLORE ALL SOCIALS LINKEDIN LINKEDIN INSTAGRAM INSTAGRAM FACEBOOK FACEBOOK X X YOUTUBE YOUTUBE THREADS THREA",
+    "forms": 1,
+    "wordCount": 1202
+  },
+  "www.blackbird.vc": {
+    "url": "https://www.blackbird.vc/",
+    "title": "Home Hub",
+    "description": "Blackbird is an Australasian investment firm whose mission is to invest in wild hearts, with the wildest ideas, right from the beginning. We have a portfolio of over 100 of Australia and New Zealand's most ambitious companies, valued at over 10B. We are just getting started.",
+    "ogImage": true,
+    "canonical": "https://blackbird.vc/",
+    "lang": "en",
+    "h1": [],
+    "h2": [],
+    "navLinks": [
+      "Get Investment",
+      "Portfolio",
+      "For Investors",
+      "Stories",
+      "Jobs",
+      "Programs & Events",
+      "About",
+      "Team",
+      "Careers"
+    ],
+    "ctas": [
+      "Startup Jobs",
+      "Contact Form",
+      "From BlackbirdMeet the inaugural Foundry FellowsTwelve technical people join Blackbird's first Foundry Fellowship cohort.",
+      "InvestmentWhen two portfolio companies join forces: Tracksuit acquires Hall Tracksuit acquires Hall, adding AI visibility to its brand tracking platform for 1,000+ consumer brands."
+    ],
+    "fonts": [
+      "Arial"
+    ],
+    "bg": "rgb(0, 0, 0)",
+    "jsonLd": [],
+    "footer": "",
+    "forms": 0,
+    "wordCount": 33
+  },
+  "expa.com": {
+    "url": "https://www.expa.com/",
+    "title": "Expa",
+    "description": "Expa combines design expertise, operational support, and capital to turn bold ideas into category-defining companies.",
+    "ogImage": true,
+    "canonical": "",
+    "lang": "en",
+    "h1": [
+      ""
+    ],
+    "h2": [],
+    "navLinks": [
+      "Expa",
+      "Companies",
+      "About"
+    ],
+    "ctas": [
+      "Uma Subramanian joins Aero as CEO",
+      "Gitalytics joins Github",
+      "OpenAI buys health records startup Torch for $100M",
+      "CONTACT"
+    ],
+    "fonts": [
+      "Universal Sans 530",
+      "Universal Sans Expa Display 450",
+      "Expa Dots"
+    ],
+    "bg": "rgba(0, 0, 0, 0)",
+    "jsonLd": [],
+    "footer": "EXPA COMPANIES AERO FIN.COM COLLECTIVE CURRENT ICONIC FIRST LAYER METABASE PIN MIX View all companies ABOUT STUDIO TEAM PORTFOLIO JOBS NEWS CONTACT CONNECT Follow us on X Send us an email Idea submission policy NEWSLETTER SUBSCRIBE TO OUR NEWSLETTER Subscribe to Newsletter LEGAL PRIVACY POLICY TERMS OF USE ©2026 EXPA. ALL RIGHTS RESERVED.",
+    "forms": 1,
+    "wordCount": 68
+  },
+  "www.cicadainnovations.com": {
+    "url": "https://www.cicadainnovations.com/",
+    "title": "Cicada Innovations",
+    "description": "Cicada Innovations is Australia's leading incubator for startups and scaleups working on deep tech science and engineering innovations.",
+    "ogImage": false,
+    "canonical": "https://www.cicadainnovations.com/",
+    "lang": "en",
+    "h1": [
+      "Welcome to Australia’s home for deep tech"
+    ],
+    "h2": [
+      "Purpose built for deep tech",
+      "Full lifecycle support",
+      "Building community",
+      "Our residents",
+      "Upcoming programs and events",
+      "Subscribe to our mailing list",
+      "Our incubator",
+      "Explore our programs"
+    ],
+    "navLinks": [
+      "About",
+      "Our Team",
+      "Focus Areas",
+      "Why Deep Tech",
+      "Incubators",
+      "Eveleigh, NSW",
+      "HealthTechHub at Westmead",
+      "Jumar Bioincubator, VIC",
+      "Residents",
+      "Support & Programs",
+      "Foundations",
+      "Elevate",
+      "Assemble",
+      "Stride",
+      "NSW Health Commercialisation Training Program",
+      "NSW Defence and Aerospace Hub",
+      "What's On",
+      "Cicada x Tech23",
+      "News & Insights",
+      "Partner With Us",
+      "Contact Us"
+    ],
+    "ctas": [
+      "Partner With Us",
+      "Contact Us",
+      "Learn more about Tech23",
+      "Explore program & apply",
+      "Explore the program & apply"
+    ],
+    "fonts": [
+      "FK Grotesk Mono",
+      "FK Grotesk"
+    ],
+    "bg": "rgba(0, 0, 0, 0)",
+    "jsonLd": [],
+    "footer": "In the spirit of reconciliation Cicada Innovations acknowledges the Traditional Custodians of country throughout Australia and their connections to land, sea and community. We pay our respect to their elders past and present and extend that respect to all Aboriginal and Torres Strait Islander peoples today. Cicada Innovations, info@cicadainnovations.com National Innovation Centre, Suite 145/4 Cornwallis St, Eveleigh, NSW, 2015, Australia",
+    "forms": 0,
+    "wordCount": 646
+  }
+}

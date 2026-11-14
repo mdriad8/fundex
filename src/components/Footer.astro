@@ -1,0 +1,131 @@
+---
+import Logo from './Logo.astro';
+import { site, nav, services } from '../data/site';
+const year = new Date().getFullYear(); // rendered at build time
+---
+
+<footer class="site-footer on-dark">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <Logo tone="light" />
+        <p>{site.positioning.headline.replace(/\.$/, '')}. Strategy and execution support for founders and growing businesses, from Melbourne.</p>
+        {
+          site.contact.emailVerified && (
+            <p>
+              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            </p>
+          )
+        }
+      </div>
+
+      <nav aria-label="Footer">
+        <h2 class="site-footer__heading">Company</h2>
+        <ul role="list">
+          <li><a href="/">Home</a></li>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="site-footer__services">
+        <h2 class="site-footer__heading">Services</h2>
+        <ul role="list">
+          {services.map((s) => <li><a href={`/services#${s.id}`}>{s.title}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">Connect</h2>
+        <ul role="list">
+          <li>
+            <a href={site.social.linkedin} rel="noopener" target="_blank">
+              LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li><a href="/contact">Contact form</a></li>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/legal">Legal &amp; scope</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__legal">
+      <p class="site-footer__scope">{site.scopeStatement}</p>
+      <p>
+        © {year} {site.legalName}{site.abn ? ` · ABN ${site.abn}` : ''} · {site.office.city}, {site.office.country}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-8) var(--space-6);
+    font-size: var(--step--1);
+  }
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+  @media (min-width: 768px) {
+    .site-footer__grid {
+      grid-template-columns: 2fr 1fr 1.4fr 1fr;
+    }
+  }
+  .site-footer__brand p {
+    color: var(--muted-on-dark);
+    margin-top: var(--space-4);
+    max-width: 22rem;
+  }
+  .site-footer__brand a {
+    color: var(--paper);
+  }
+  @media (max-width: 767.98px) {
+    .site-footer__services {
+      display: none;
+    }
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+  .site-footer__heading {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-400);
+    margin-bottom: var(--space-3);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-1);
+  }
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--paper);
+    text-decoration: none;
+  }
+  ul a:hover {
+    text-decoration: underline;
+    color: var(--gold-300);
+  }
+  .site-footer__legal {
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--navy-800);
+    color: var(--muted-on-dark);
+    display: grid;
+    gap: var(--space-3);
+  }
+  .site-footer__scope {
+    max-width: 60rem;
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+import { absolute, organizationLd, websiteLd, webPageLd, breadcrumbLd, jsonLd, type Crumb } from '../lib/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path for canonical URL, e.g. "/about". Defaults to the current path. */
+  path?: string;
+  noindex?: boolean;
+  crumbs?: Crumb[];
+  pageType?: string;
+  extraLd?: object[];
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  path = Astro.url.pathname,
+  noindex = false,
+  crumbs = [],
+  pageType,
+  extraLd = [],
+  ogImage = '/og/fundex-global.png',
+} = Astro.props;
+
+const fullTitle = path === '/' ? `${site.name} | ${site.positioning.headline.replace(/\.$/, '')}` : `${title} | ${site.name}`;
+const canonical = absolute(path);
+const ogUrl = absolute(ogImage);
+
+const graph = [
+  organizationLd(),
+  websiteLd(),
+  webPageLd({ path, title: fullTitle, description, type: pageType }),
+  ...(crumbs.length ? [breadcrumbLd([{ name: 'Home', path: '/' }, ...crumbs])] : []),
+  ...extraLd,
+];
+---
+
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Fundex Global: where strategy meets execution" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0B1422" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-text" preload />
+
+    <script type="application/ld+json" set:html={jsonLd(graph)} />
+
+    <noscript>
+      <style>
+        .menu-toggle { display: none !important; }
+        @media (max-width: 899.98px) { .site-nav { display: block !important; } }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: var(--space-4);
+        top: -100px;
+        z-index: 100;
+        padding: var(--space-3) var(--space-4);
+        background: var(--gold-400);
+        color: var(--navy-950);
+        font-weight: 600;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+      }
+      .skip-link:focus {
+        top: var(--space-3);
+      }
+      main:focus {
+        outline: none;
+      }
+    </style>
+  </body>
+</html>

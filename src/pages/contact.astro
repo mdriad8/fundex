@@ -1,0 +1,321 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, enquiryTypes } from '../data/site';
+import { LIMITS } from '../lib/contact/validate';
+import { HONEYPOT_FIELD } from '../lib/contact/spam';
+
+const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undefined;
+---
+
+<Base
+  title="Contact"
+  description="Contact Fundex Global in Melbourne. Tell us about your business and what you are trying to achieve, and we will reply by email."
+  path="/contact"
+  pageType="ContactPage"
+  crumbs={[{ name: 'Contact', path: '/contact' }]}
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Start a conversation"
+    lede="Tell us where your business is today and what you want to achieve. A few sentences is enough to start."
+  />
+
+  <section class="section" aria-label="Contact form and details">
+    <div class="container contact__grid">
+      <div class="card form-card">
+        <h2 id="form-title">Send us a message</h2>
+        <p class="form-intro">All fields are required unless marked optional.</p>
+
+        <div class="form-status" data-status role="status" aria-live="polite" tabindex="-1" hidden></div>
+
+        <form
+          method="post"
+          action="/api/contact"
+          novalidate
+          aria-labelledby="form-title"
+          data-contact-form
+        >
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required minlength={LIMITS.name.min} maxlength={LIMITS.name.max} aria-describedby="name-error" />
+            <p class="field__error" id="name-error" data-error-for="name" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength={LIMITS.email.max} aria-describedby="email-error" />
+            <p class="field__error" id="email-error" data-error-for="email" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="organisation">Organisation <span class="optional">(optional)</span></label>
+            <input id="organisation" name="organisation" type="text" autocomplete="organization" maxlength={LIMITS.organisation.max} aria-describedby="organisation-error" />
+            <p class="field__error" id="organisation-error" data-error-for="organisation" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="enquiryType">What is your enquiry about?</label>
+            <select id="enquiryType" name="enquiryType" required aria-describedby="enquiryType-error">
+              <option value="">Please choose…</option>
+              {enquiryTypes.map((t) => <option value={t.value}>{t.label}</option>)}
+            </select>
+            <p class="field__error" id="enquiryType-error" data-error-for="enquiryType" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="message">Your message</label>
+            <p class="field__hint" id="message-hint">
+              Where is the business today, and what would you like to change? Please do not include confidential or
+              commercially sensitive information in a first message.
+            </p>
+            <textarea id="message" name="message" rows="7" required minlength={LIMITS.message.min} maxlength={LIMITS.message.max} aria-describedby="message-hint message-error"></textarea>
+            <p class="field__error" id="message-error" data-error-for="message" hidden></p>
+          </div>
+
+          <div class="field field--check">
+            <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error" />
+            <label for="consent">
+              I have read the <a href="/privacy#collection-notice">privacy collection notice</a> and agree to Fundex Global using these details to reply to my enquiry.
+            </label>
+            <p class="field__error" id="consent-error" data-error-for="consent" hidden></p>
+          </div>
+
+          <!-- Spam trap: hidden from people and assistive technology; bots tend to fill it in. -->
+          <div class="hp" aria-hidden="true">
+            <label for={HONEYPOT_FIELD}>Leave this field empty</label>
+            <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <input type="hidden" name="startedAt" value="" data-started-at />
+
+          {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-theme="light"></div>}
+
+          <button class="btn btn--primary submit" type="submit" data-submit>
+            <span data-submit-label>Send message</span>
+          </button>
+          <p class="form-foot">{site.contact.responseTime}</p>
+        </form>
+      </div>
+
+      <aside class="contact__aside" aria-label="Other ways to reach us">
+        {
+          site.contact.emailVerified && (
+            <div class="aside-block">
+              <h2>Email</h2>
+              <p><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
+            </div>
+          )
+        }
+        {
+          site.contact.phone.show && (
+            <div class="aside-block">
+              <h2>Phone</h2>
+              <p><a href={site.contact.phone.href}>{site.contact.phone.display}</a></p>
+            </div>
+          )
+        }
+        <div class="aside-block">
+          <h2>Location</h2>
+          <p>
+            {site.office.showStreetAddress && <>{site.office.streetAddress}<br /></>}
+            {site.office.city} {site.office.region}{site.office.showStreetAddress && ` ${site.office.postcode}`}, {site.office.country}
+          </p>
+          {!site.office.showStreetAddress && <p class="muted">Meetings by arrangement.</p>}
+        </div>
+        <div class="aside-block">
+          <h2>LinkedIn</h2>
+          <p><a href={site.social.linkedin} rel="noopener" target="_blank">Fundex Global<span class="visually-hidden"> on LinkedIn (opens in a new tab)</span></a></p>
+        </div>
+        <div class="aside-block">
+          <h2>What happens next</h2>
+          <ol class="next-steps">
+            <li>We read your message and reply by email.</li>
+            <li>If there looks to be a fit, we suggest a short call.</li>
+            <li>Any work starts only after scope and fees are agreed in writing.</li>
+          </ol>
+        </div>
+        <p class="notice">
+          Please be cautious of scams. {site.name} will never ask you to transfer money or share passwords or bank
+          details by email.
+        </p>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+{turnstileKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import { enhanceContactForm } from '../lib/contact/client';
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) enhanceContactForm(form);
+</script>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  @media (min-width: 1024px) {
+    .contact__grid {
+      grid-template-columns: 7fr 4fr;
+      gap: var(--space-8);
+    }
+  }
+  .form-card h2 {
+    font-size: var(--step-2);
+  }
+  .form-intro {
+    color: var(--muted);
+    margin: var(--space-2) 0 var(--space-5);
+    font-size: var(--step--1);
+  }
+  form {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .field {
+    display: grid;
+    gap: var(--space-2);
+  }
+  label {
+    font-weight: 600;
+  }
+  .optional {
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .field__hint {
+    font-size: var(--step--1);
+    color: var(--muted);
+    margin-top: calc(-1 * var(--space-1));
+  }
+  input[type='text'],
+  input[type='email'],
+  select,
+  textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
+    background: var(--white);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-size: 1rem; /* 16px prevents iOS zoom on focus */
+  }
+  textarea {
+    resize: vertical;
+    min-height: 10rem;
+  }
+  select {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+    background-position: calc(100% - 1.25rem) 50%, calc(100% - 0.9rem) 50%;
+    background-size: 0.35rem 0.35rem;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--navy-950);
+  }
+  [aria-invalid='true'] {
+    border-color: var(--error) !important;
+    border-width: 2px !important;
+  }
+  .field__error {
+    color: var(--error);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+  .field--check {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: var(--space-3);
+  }
+  .field--check input {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.15rem;
+    accent-color: var(--navy-950);
+  }
+  .field--check label {
+    font-weight: 400;
+  }
+  .field--check .field__error {
+    grid-column: 1 / -1;
+  }
+  .hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .submit {
+    justify-self: start;
+  }
+  @media (max-width: 479.98px) {
+    .submit {
+      width: 100%;
+    }
+  }
+  .form-foot {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .form-status {
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-5);
+    font-weight: 500;
+  }
+  .form-status[data-tone='error'] {
+    background: var(--error-bg);
+    color: var(--error);
+    border-left: 4px solid var(--error);
+  }
+  .form-status[data-tone='success'] {
+    background: var(--success-bg);
+    color: var(--success);
+    border-left: 4px solid var(--success);
+  }
+  .form-status ul {
+    margin-top: var(--space-2);
+    padding-left: 1.25rem;
+  }
+  .form-status a {
+    color: inherit;
+  }
+  .contact__aside {
+    display: grid;
+    gap: var(--space-5);
+  }
+  .aside-block h2 {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-700);
+    margin-bottom: var(--space-1);
+  }
+  .aside-block a {
+    display: inline-block;
+    min-height: 24px;
+    padding-block: 2px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .muted {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+  .next-steps {
+    padding-left: 1.25rem;
+    display: grid;
+    gap: var(--space-2);
+  }
+</style>

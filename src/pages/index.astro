@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Steps from '../components/Steps.astro';
+import PathGraphic from '../components/PathGraphic.astro';
+import { site, services, principles } from '../data/site';
+---
+
+<Base title="Home" description={site.positioning.description} path="/">
+  <PageHero
+    size="home"
+    eyebrow="Fundex Global · Melbourne"
+    title={site.positioning.headline}
+    lede={site.positioning.subheadline}
+  >
+    <div class="btn-row">
+      <a class="btn btn--primary" href="/contact">Start a conversation</a>
+      <a class="btn btn--secondary" href="/services#how-we-work">See how we work</a>
+    </div>
+    <PathGraphic slot="aside" />
+  </PageHero>
+
+  <section class="section" aria-labelledby="what-we-do">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we do</p>
+        <h2 id="what-we-do">Four ways we help a business move forward</h2>
+        <p class="lede">
+          Each engagement is shaped around one question: what needs to happen next for this business to make
+          real progress?
+        </p>
+      </div>
+      <ul class="grid grid--2 service-cards" role="list">
+        {
+          services.map((s, i) => (
+            <li class="card service-card">
+              <span class="service-card__num" aria-hidden="true">
+                0{i + 1}
+              </span>
+              <h3>{s.title}</h3>
+              <p>{s.summary}</p>
+              <p class="service-card__for">{s.forWho}</p>
+              <a class="text-link" href={`/services#${s.id}`}>
+                More<span class="visually-hidden"> about {s.title}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section on-dark" aria-labelledby="how-we-work">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How we work</p>
+        <h2 id="how-we-work">From ambition to execution</h2>
+        <p class="lede">A simple, repeatable way of working, so you always know what happens next and why.</p>
+      </div>
+      <Steps />
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="who">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Who we work with</p>
+        <h2 id="who">Built for people who want progress, not just a plan</h2>
+      </div>
+      <div class="grid grid--2">
+        <article class="card audience">
+          <h3>Founders &amp; business leaders</h3>
+          <p>
+            You are starting something new, or your business has reached a point where the next step is not
+            obvious. You want a partner to think it through with you, and then help you do it.
+          </p>
+          <a class="text-link" href="/services">Explore services <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="card audience">
+          <h3>Organisations seeking partners</h3>
+          <p>
+            You are looking for capable businesses to work with as suppliers, channels or delivery partners. We
+            help businesses shape partnerships that are clear for both sides, and make commercial introductions
+            where there is a genuine fit.
+          </p>
+          <a class="text-link" href="/contact">Talk to us <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="principles">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Our principles</p>
+        <h2 id="principles">How you can expect us to work</h2>
+      </div>
+      <ul class="grid grid--4 principles" role="list">
+        {
+          principles.map((p) => (
+            <li class="principle">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .service-cards {
+    list-style: none;
+    padding: 0;
+  }
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .service-card {
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+  .service-card h3 {
+    font-size: var(--step-2);
+  }
+  .service-card p {
+    color: var(--ink);
+    font-size: var(--step-1);
+  }
+  .service-card .service-card__for {
+    color: var(--muted);
+    font-size: var(--step-0);
+    flex: 1;
+  }
+  .service-card__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--gold-700);
+    font-size: var(--step--1);
+    letter-spacing: 0.05em;
+  }
+  .audience {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+  }
+  .audience p {
+    color: var(--muted);
+  }
+  .principles {
+    list-style: none;
+    padding: 0;
+  }
+  .principle {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--line);
+  }
+  .principle p {
+    color: var(--muted);
+  }
+</style>

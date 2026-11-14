@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site, services } from '../../data/site';
+
+const posts = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+const isEmpty = posts.length === 0;
+const topicLabel = Object.fromEntries(services.map((s) => [s.id, s.title]));
+const fmt = new Intl.DateTimeFormat('en-AU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base
+  title="Insights"
+  description="Practical notes from Fundex Global on strategy, execution, investment readiness and partnerships for founders and growing businesses."
+  path="/insights"
+  pageType="CollectionPage"
+  crumbs={[{ name: 'Insights', path: '/insights' }]}
+  noindex={isEmpty}
+>
+  <PageHero
+    eyebrow="Insights"
+    title="Practical notes on strategy and execution"
+    lede="Short, useful pieces for founders and business leaders. We publish when we have something worth saying, not to a schedule."
+  />
+
+  <section class="section" aria-labelledby="topics-title">
+    <div class="container">
+      {
+        isEmpty ? (
+          <div class="card empty">
+            <h2 id="topics-title">The first articles are in preparation</h2>
+            <p>
+              Nothing has been published here yet. We will write about the four areas we work in. To hear when the
+              first pieces go live, follow {site.name} on LinkedIn.
+            </p>
+            <ul class="topics" role="list" aria-label="Topics we will write about">
+              {services.map((s) => <li>{s.title}</li>)}
+            </ul>
+            <div class="btn-row">
+              <a class="btn btn--primary" href={site.social.linkedin} rel="noopener" target="_blank">
+                Follow on LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+              <a class="btn btn--secondary" href="/contact">Suggest a topic</a>
+            </div>
+          </div>
+        ) : (
+          <>
+          <h2 id="topics-title" class="visually-hidden">Articles</h2>
+          <ul class="posts grid grid--3" role="list">
+            {posts.map((p) => (
+              <li class="card post">
+                <p class="post__meta">
+                  {topicLabel[p.data.topic]} · <time datetime={p.data.publishedAt.toISOString()}>{fmt.format(p.data.publishedAt)}</time>
+                </p>
+                <h2 class="post__title">
+                  <a href={`/insights/${p.id}`}>{p.data.title}</a>
+                </h2>
+                <p>{p.data.description}</p>
+              </li>
+            ))}
+          </ul>
+          </>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .topics {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .topics li {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--white);
+  }
+  .empty {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 44rem;
+  }
+  .empty p {
+    color: var(--muted);
+  }
+  .posts {
+    list-style: none;
+    padding: 0;
+  }
+  .post {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+  .post__meta {
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+  .post__title {
+    font-size: var(--step-1);
+  }
+  .post__title a {
+    text-decoration: none;
+  }
+  .post__title a:hover {
+    text-decoration: underline;
+  }
+</style>

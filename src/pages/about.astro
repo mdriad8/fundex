@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, principles } from '../data/site';
+
+const description = `About ${site.name}: a Melbourne-based strategy and execution partner for founders and growing businesses, founded in ${site.foundingYear}.`;
+
+const founderLd = {
+  '@type': 'Person',
+  name: site.founder.name,
+  jobTitle: site.founder.role,
+  worksFor: { '@id': `${site.url}/#organization` },
+};
+---
+
+<Base
+  title="About"
+  description={description}
+  path="/about"
+  pageType="AboutPage"
+  crumbs={[{ name: 'About', path: '/about' }]}
+  extraLd={[founderLd]}
+>
+  <PageHero
+    eyebrow="About"
+    title="A focused partner for the work between idea and result"
+    lede={`${site.name} was founded in ${site.office.city} in ${site.foundingYear} to help founders and business leaders do two things well: decide what matters, and then get it done.`}
+  />
+
+  <section class="section section--white" aria-labelledby="why-title">
+    <div class="container about__grid">
+      <div class="section-head">
+        <p class="eyebrow">Why we exist</p>
+        <h2 id="why-title">Good strategy is common. Good execution is rare.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Many businesses have a plan. Fewer have the time, focus and outside perspective to turn it into results.
+          Advice often stops at the recommendation, and the hardest part (making it happen) is left to a team that is
+          already at capacity.
+        </p>
+        <p>
+          {site.name} exists to close that gap. We work alongside founders and business leaders from the first
+          conversation about where they want to go through to the work of getting there, and we stay accountable
+          for progress along the way.
+        </p>
+        <p>
+          We are deliberately small. That means you work directly with the founder, the scope is agreed in writing,
+          and we only take on work where we believe we can make a real difference.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="founder-title">
+    <div class="container about__grid">
+      <div class="section-head">
+        <p class="eyebrow">Leadership</p>
+        <h2 id="founder-title">Founder-led</h2>
+      </div>
+      <article class:list={['founder', site.founder.photo ? 'founder--photo' : 'founder--text']}>
+        {
+          site.founder.photo && (
+            <img class="founder__photo" src={site.founder.photo} alt={`${site.founder.name}, ${site.founder.role}`} width="320" height="320" loading="lazy" decoding="async" />
+          )
+        }
+        <div class="founder__body">
+          <p class="founder__role">{site.founder.role}, {site.legalName}</p>
+          <h3 class="founder__name">{site.founder.name}</h3>
+          <p class="founder__intro">
+            {site.founder.name.split(' ')[0]} founded {site.name} in {site.office.city} in {site.foundingYear} and works
+            directly with every client, from the first conversation through to delivery.
+          </p>
+          {site.founder.bio && <p>{site.founder.bio}</p>}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--white" aria-labelledby="principles-title">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Principles</p>
+        <h2 id="principles-title">What you can hold us to</h2>
+      </div>
+      <ul class="grid grid--2 principles" role="list">
+        {
+          principles.map((p) => (
+            <li class="card principle">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="facts-title">
+    <div class="container container--narrow">
+      <div class="section-head">
+        <p class="eyebrow">Company details</p>
+        <h2 id="facts-title">At a glance</h2>
+      </div>
+      <dl class="facts">
+        <div><dt>Legal name</dt><dd>{site.legalName}</dd></div>
+        {site.abn && <div><dt>ABN</dt><dd>{site.abn}</dd></div>}
+        <div><dt>Founded</dt><dd>{site.foundingYear}</dd></div>
+        <div><dt>Based in</dt><dd>{site.office.city}, {site.office.country}</dd></div>
+        {site.acn && <div><dt>ACN</dt><dd>{site.acn}</dd></div>}
+        {site.contact.emailVerified && <div><dt>Email</dt><dd><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></dd></div>}
+        <div>
+          <dt>LinkedIn</dt>
+          <dd><a href={site.social.linkedin} rel="noopener" target="_blank">Fundex Global on LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .about__grid {
+    display: grid;
+    gap: var(--space-5);
+  }
+  @media (min-width: 900px) {
+    .about__grid {
+      grid-template-columns: 4fr 7fr;
+      gap: var(--space-8);
+    }
+    .about__grid .section-head {
+      margin-bottom: 0;
+    }
+  }
+  .prose p {
+    color: var(--ink);
+    max-width: 40rem;
+  }
+  .founder {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .founder--text {
+    border-left: 4px solid var(--gold-700);
+    padding: var(--space-2) 0 var(--space-2) clamp(1.25rem, 1rem + 2vw, 2.5rem);
+  }
+  @media (min-width: 640px) {
+    .founder--photo {
+      grid-template-columns: 10rem 1fr;
+    }
+  }
+  .founder__photo {
+    width: 10rem;
+    height: 10rem;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+  }
+  .founder__body {
+    display: grid;
+    gap: var(--space-3);
+  }
+  .founder__name {
+    font-size: var(--step-3);
+  }
+  .founder__role {
+    color: var(--gold-700);
+    font-weight: 600;
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .founder__intro {
+    font-size: var(--step-1);
+    max-width: 36rem;
+  }
+  .principles {
+    list-style: none;
+    padding: 0;
+  }
+  .principle {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+  .principle p {
+    color: var(--muted);
+  }
+  .facts {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .facts > div {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 640px) {
+    .facts > div {
+      grid-template-columns: 12rem 1fr;
+    }
+  }
+  .facts dt {
+    font-weight: 600;
+    color: var(--muted);
+  }
+  .facts dd {
+    overflow-wrap: anywhere;
+  }
+</style>

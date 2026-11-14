@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+const updated = '14 November 2026';
+---
+
+<Base
+  title="Legal & scope"
+  description="Terms of use for the Fundex Global website, the scope of our services, and how to recognise scams."
+  path="/legal"
+  crumbs={[{ name: 'Legal & scope', path: '/legal' }]}
+>
+  <PageHero eyebrow="Legal" title="Legal information and scope" lede={`Last updated ${updated}.`} />
+  <section class="section section--white">
+    <div class="container container--narrow prose">
+      <h2 id="scope">Scope of our services</h2>
+      <p>{site.scopeStatement}</p>
+      <p>
+        Our services are strategy, execution, business-planning and commercial-partnership support for businesses. Nothing on
+        this website is an offer, invitation or recommendation to buy or sell any financial product or to invest in any
+        business. If you need financial product, tax or legal advice, please consult an appropriately licensed or
+        qualified professional.
+      </p>
+
+      <h2 id="website-terms">Using this website</h2>
+      <ul>
+        <li>The content on this website is general information only and may change without notice.</li>
+        <li>We take care to keep it accurate but do not guarantee it is complete or current.</li>
+        <li>Links to other websites are provided for convenience. We are not responsible for their content.</li>
+        <li>The {site.name} name, logo and website content belong to {site.legalName}. Please ask before reusing them.</li>
+        <li>These terms are governed by the laws of Victoria, Australia.</li>
+      </ul>
+
+      <h2 id="ideas">Sharing ideas and plans</h2>
+      <p>
+        We are glad to hear about your business. Please do not send confidential or commercially sensitive information
+        through the contact form or in a first email. If we agree to work together, we can put appropriate
+        confidentiality terms in place first.
+      </p>
+
+      <h2 id="scams">Scam warning</h2>
+      <p>
+        Scammers sometimes impersonate legitimate businesses. {site.name} will never ask you to transfer money, invest in
+        anything, or share passwords or bank details by email, phone or social media. If you receive a message like this
+        that claims to be from us, do not respond. Contact us through this website, and report it to
+        <a href="https://www.scamwatch.gov.au" rel="noopener">Scamwatch</a>.
+      </p>
+
+      <h2 id="company">Company details</h2>
+      <p>
+        {site.legalName}{site.abn ? `, ABN ${site.abn}` : ''}{site.acn ? `, ACN ${site.acn}` : ''}. {site.office.city},
+        {site.office.country}. Contact us through our <a href="/contact">contact page</a>.
+      </p>
+    </div>
+  </section>
+</Base>
