@@ -71,3 +71,18 @@ All reviews took place in the founder's ChatGPT project **"Fundex"**, chat **"Fu
 | Prefer the platform-provided client address over forwarded headers | `getClientIp` uses Astro's `clientAddress` and consults forwarded headers only when it is missing or loopback (local development). Tested |
 | JSON-LD must escape HTML-significant characters | Already: `jsonLd()` escapes `<` as `\u003c` |
 | Tests verify app behaviour, not external integration (Resend accepted/rejected/timeout, Upstash outage, Turnstile, deployed CSP/redirects/JSON-LD, inbox arrival) | Not fakeable from here: these need the owner's Vercel, Resend and Upstash accounts. Listed as **blocking launch gates** in `docs/launch/deployment-checklist.md` §C and in the PR |
+
+## Round 5: launch readiness
+
+**Sent:** the deployment checklist with rollback plan, the batched owner decisions, the QA report, this review log (rounds 1–4), and a summary of the round 4 fixes (commit f6418af; 84 Vitest + 92 Playwright passing). I stated plainly that I could not produce production-integration evidence because the Vercel, Resend and Upstash accounts belong to the owners and the preview is SSO-protected.
+
+**Verdict:** Engineering 9/10. **Open PR for owner review: GO. Approve code for merge: CONDITIONAL. Production deployment: NO-GO** until the operational gates pass. "READY FOR OWNER ACCEPTANCE TESTING — NOT YET PRODUCTION-AUTHORISED."
+
+| ChatGPT point | Action taken |
+|---|---|
+| Rolling back to the old site restores unsupported claims and a broken form; prepare a minimal compliant fallback | Added `docs/launch/fallback/index.html` (verified facts, scope statement, LinkedIn, `noindex`, no form). The rollback plan now prefers the fallback or rolling forward; Instant Rollback is emergency-only |
+| `git revert -m 1` applies only to merge commits | Rollback plan now covers merge, squash and rebase merges |
+| Require a production-equivalent preview test plus one enquiry received **and replied to** | Added to checklist §C |
+| Alert on repeated Upstash failures; memory fallback is degraded protection | Alert rules added to checklist §F; the code comment marks the event as degraded |
+| Minimum blocking owner decisions vs. two-week items | `owner-decisions.md` re-tiered: brand identity, the reply promise, repository-owner authorisation and deployment approval are now blocking. Photo/bio, address/phone, the first Insights article, and Search Console/LinkedIn updates can follow within two weeks |
+| Top launch-day risks: lost enquiries, rate-limiter/spam failures, deployment-specific failures | Covered by checklist §D (immediate test enquiry; check canonicals, 404/301, CSP, JSON-LD and mobile contact on the real domain) and §F (alerts) |

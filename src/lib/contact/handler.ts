@@ -101,6 +101,7 @@ async function rateCheck(store: RateStore, id: string, rules: RateRule[], log: D
   try {
     return await checkRate(store, id, rules);
   } catch (e) {
+    // Degraded protection (per-instance only). Alert on this event; see deployment checklist §F.
     log?.('contact.rate_store_error', { error: String(e).slice(0, 200) });
     return checkRate(memoryStore(), id, rules);
   }

@@ -4,6 +4,8 @@
 
 Each item says what is needed, why, and what the site does until you decide. Every one of them is a one-line change in `src/data/site.ts` unless noted.
 
+> **Tiers agreed in ChatGPT review round 5:** everything under "Blocking launch" must be settled before production. Items under "Within two weeks of launch" can follow.
+
 ## Blocking launch
 
 | # | Decision | Why it matters | Current default on the branch |
@@ -15,7 +17,12 @@ Each item says what is needed, why, and what the site does until you decide. Eve
 | 5 | **Approve the positioning line** "Where strategy meets execution." with the sub-line "We help founders and growing businesses turn complex challenges into clear plans, practical solutions and measurable progress." | Brand promise (ChatGPT round 1 approved it) | Shown |
 | 6 | **Privacy policy and legal/scope page:** read them and get advice if needed. Confirm whether Fundex is covered by the Privacy Act (for example, turnover over $3m) | They are drafts written in good faith, not legal advice | Shown |
 
-## Needed for trust (strongly recommended before launch)
+| 6a | **Brand identity:** approve the logo redraw (item 12 below) | Round 5 moved this to blocking | Flat redraw shown |
+| 6b | **Two-business-day reply promise** (item 11 below): support it operationally or remove it | Round 5: a public promise must be kept | Shown |
+| 6c | **Repository owner authorisation:** the GitHub owner **mdriad8** / Vercel team "md-riadul-hasan-bappis-projects" must approve the Vite→Astro migration, give preview access (it is SSO-protected) or run the preview checks, and approve the release | The Vercel project isn't in your account. I could not test the preview | Blocked |
+| 6d | **Approve the production deployment** after the checklist §C integration tests pass (a real enquiry received and replied to) | Round 5: no production release without integration evidence | Not deployed |
+
+## Within two weeks of launch (trust-builders)
 
 | # | Decision | Why | Current default |
 |---|---|---|---|

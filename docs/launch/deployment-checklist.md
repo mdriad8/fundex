@@ -5,14 +5,18 @@
 
 ## A. Before merge: owner decisions (blocking)
 
-See `docs/launch/owner-decisions.md`. Launch is blocked until at least these are settled:
+See `docs/launch/owner-decisions.md` (tiers agreed in review round 5). Launch is blocked until all of these are settled:
 
 - [ ] Services confirmed (claims register B6a–B6f), or edited in `src/data/site.ts`
 - [ ] Positioning line approved ("Where strategy meets execution.")
-- [ ] AFSL / licensing status confirmed, so the scope statement is accurate (B8)
-- [ ] `info@fundexglobal.vc` tested (send and receive), then `contact.emailVerified: true`
-- [ ] Privacy and legal page wording reviewed
-- [ ] Logo redraw approved, or master artwork supplied
+- [ ] AFSL / authorisation status confirmed, so the scope statement is accurate (B8)
+- [ ] Privacy and legal page wording approved
+- [ ] Brand identity approved (logo redraw or master artwork)
+- [ ] Monitored receiving inbox confirmed (then `contact.emailVerified: true` if it should be shown)
+- [ ] Resend domain verification and Upstash configuration in place
+- [ ] The two-business-day reply promise is operationally supported, or removed (`site.contact.responseTime`)
+- [ ] The repository owner (GitHub **mdriad8**, Vercel team "md-riadul-hasan-bappis-projects") authorises the framework migration, preview access for testing, and the production release
+- [ ] The owner approves the actual production deployment **after** §C passes
 
 ## B. Vercel configuration (owner or project admin)
 
@@ -40,7 +44,9 @@ See `docs/launch/owner-decisions.md`. Launch is blocked until at least these are
 - [ ] If Turnstile is enabled: the widget renders under the CSP, and a submission without a token is refused
 - [ ] Deployed CSP: no console CSP violations on any page; cross-origin POST to `/api/contact` returns 403
 - [ ] Validate JSON-LD on the deployed URL with the Schema.org validator / Google Rich Results Test
-- [ ] Lighthouse on the preview URL: mobile Performance ≥ 90, Accessibility 100, Best Practices ≥ 95, SEO 100
+- [ ] **Production-equivalent preview:** set the same Resend/Upstash/salt variables for the Preview environment (or a dedicated staging environment), then repeat the checks above against it. Provider API acceptance alone is not enough (review round 5)
+- [ ] **One real enquiry received AND replied to:** send from a personal address, confirm it arrives in the monitored inbox, reply from that inbox, and confirm the reply arrives
+- [ ] Lighthouse on the preview URL: mobile Performance ≥ 90, Accessibility 100, Best Practices ≥ 95, SEO 100. Record the results in `docs/qa/qa-report.md` (local results are not proof of production performance)
 - [ ] Social preview: paste the preview URL into LinkedIn Post Inspector (owner's account) and check the title, description and image
 
 ## D. Release
@@ -57,10 +63,14 @@ See `docs/launch/owner-decisions.md`. Launch is blocked until at least these are
 
 ## E. Rollback plan
 
+> **Important (review round 5):** the pre-redesign site (production deployment of `b71c3a2`) still contains the unsupported investment claims and the contact form that silently discards messages (audit C1–C3). Restoring it is an **emergency availability measure only**, not a safe resting state. Prefer the compliant fallback page below, and roll forward with a fix.
+
 | Situation | Action | Time |
 |---|---|---|
-| Any production problem after merge | **Vercel dashboard → Deployments → the previous production deployment (b71c3a2, 22 May 2026, or whichever was live before) → "Promote to Production"** (Instant Rollback). No rebuild needed | < 1 min |
-| Need the code reverted as well | `git revert -m 1 <merge-commit>` on `main` and push. Vercel redeploys the old site | ~3 min |
+| A single page or feature is broken | Roll **forward**: fix on a branch, preview, merge | varies |
+| The new site is unusable | **Compliant fallback:** deploy `docs/launch/fallback/index.html`. It is a one-page notice with only verified facts, the scope statement and a LinkedIn link, `noindex`. Steps: on a branch, copy the file to `public/index.html`, temporarily remove `src/pages/index.astro`, push, test the preview, then promote it. Or upload it as a static Vercel project and point the domain at it | ~10 min |
+| Total outage and no time to prepare the fallback | **Vercel dashboard → Deployments → the previous production deployment → "Promote to Production"** (Instant Rollback, no rebuild). Then replace it with the compliant fallback as soon as possible | < 1 min |
+| Revert the code on `main` | If merged with a **merge commit**: `git revert -m 1 <merge-commit-sha>`. If **squash-merged**: `git revert <squash-commit-sha>` (no `-m`). If **rebase-merged**: revert each commit in reverse order. Push to `main`, and Vercel redeploys | ~3 min |
 | Only the contact form misbehaves | Remove `RESEND_API_KEY` in Vercel and redeploy. The form returns 503 and tells visitors that nothing was sent, while the rest of the site stays up | ~2 min |
 | Spam surge | Add the Turnstile keys and redeploy. Lower `CONTACT_RULES` limits in `src/lib/contact/rateLimit.ts` if needed | ~5 min |
 
@@ -68,5 +78,10 @@ The previous site remains available in Git history (`main` @ `b71c3a2`) and as t
 
 ## F. After launch (first two weeks)
 
-- Watch Vercel function logs for `contact.*` events (`contact.sent`, `contact.spam`, `contact.rate_limited`, `contact.delivery-failed`, `contact.not-configured`).
+- Watch Vercel function logs for `contact.*` events: `contact.sent`, `contact.spam`, `contact.rate_limited`, `contact.delivery_rejected`, `contact.delivery_unconfirmed`, `contact.delivery_not-configured`, `contact.rate_store_error`, `contact.rate_store_missing`.
+- **Alerts** (Vercel Log Drains or Monitoring → alert to the owner's email):
+  - any `contact.rate_store_error`: Upstash is failing, so protection has degraded to per-instance memory limits. This is not equivalent protection; fix the same day;
+  - two or more `contact.delivery_*` failures within 24 h: enquiries may be lost;
+  - zero `contact.sent` for 14 days after launch: check the form still works.
+- If spam protection becomes unreliable, disable submissions safely by removing `RESEND_API_KEY` (the form then says so honestly; see §E).
 - Once there is enough traffic, check field Core Web Vitals in Search Console. None exist for this origin today.
