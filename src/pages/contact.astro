@@ -73,13 +73,6 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
             <p class="field__error" id="message-error" data-error-for="message" hidden></p>
           </div>
 
-          <div class="field field--check">
-            <input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error" />
-            <label for="consent">
-              I have read the <a href="/privacy#collection-notice">privacy collection notice</a> and agree to Fundex Global using these details to reply to my enquiry.
-            </label>
-            <p class="field__error" id="consent-error" data-error-for="consent" hidden></p>
-          </div>
 
           <!-- Spam trap: hidden from people and assistive technology; bots tend to fill it in. -->
           <div class="hp" aria-hidden="true">
@@ -90,7 +83,12 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
 
           {turnstileKey && <div class="cf-turnstile" data-sitekey={turnstileKey} data-theme="light"></div>}
 
-          <button class="btn btn--primary submit" type="submit" data-submit>
+          <p class="privacy-note" id="privacy-note">
+            We use these details only to reply to your enquiry. Read our
+            <a href="/privacy#collection-notice">privacy collection notice</a>.
+          </p>
+
+          <button class="btn btn--primary submit" type="submit" data-submit aria-describedby="privacy-note">
             <span data-submit-label>Send message</span>
           </button>
           <p class="form-foot">{site.contact.responseTime}</p>
@@ -135,8 +133,7 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
           </ol>
         </div>
         <p class="notice">
-          Please be cautious of scams. {site.name} will never ask you to transfer money or share passwords or bank
-          details by email.
+          Please be cautious of scams. {site.name} does not solicit investments. Never share passwords, and independently verify any payment request through our official contact channel.
         </p>
       </aside>
     </div>
@@ -230,22 +227,9 @@ const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY as string | undef
     font-size: var(--step--1);
     font-weight: 600;
   }
-  .field--check {
-    grid-template-columns: auto 1fr;
-    align-items: start;
-    column-gap: var(--space-3);
-  }
-  .field--check input {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-top: 0.15rem;
-    accent-color: var(--navy-950);
-  }
-  .field--check label {
-    font-weight: 400;
-  }
-  .field--check .field__error {
-    grid-column: 1 / -1;
+  .privacy-note {
+    font-size: var(--step--1);
+    color: var(--muted);
   }
   .hp {
     position: absolute;

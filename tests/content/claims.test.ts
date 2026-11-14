@@ -50,6 +50,9 @@ const REMOVED_CLAIMS = [
   /decades of combined experience/i,
   /testimonial/i,
   /well-prepared opportunities/i,
+  /investment readiness/i,
+  /works directly with every client/i,
+  /initiatives delivered/i,
   /investment range/i,
   /deal size/i,
 ];

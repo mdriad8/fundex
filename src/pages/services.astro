@@ -6,7 +6,7 @@ import Steps from '../components/Steps.astro';
 import { site, services } from '../data/site';
 
 const description =
-  'Strategy and venture design, execution and growth support, investment readiness, and partnerships: how Fundex Global helps founders and growing businesses.';
+  'Strategy and venture design, execution and growth support, business planning and pitch preparation, and commercial partnerships for growing businesses.';
 
 const faqs = [
   {
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     q: 'What happens after I get in touch?',
-    a: `We read every message. ${site.contact.responseTime} If there looks to be a fit, we suggest a short call to understand where you are and what you need.`,
+    a: `We review every enquiry. ${site.contact.responseTime} If there looks to be a fit, we suggest a short call to understand where you are and what you need.`,
   },
   {
     q: 'How is an engagement priced?',
@@ -75,6 +75,11 @@ const faqLd = {
               {s.outcomes.map((o) => <li>{o}</li>)}
             </ul>
             {s.note && <p class="notice">{s.note}</p>}
+            <p>
+              <a class="text-link" href={`/contact?enquiry=${s.id}`}>
+                Discuss {s.title.toLowerCase()} <span aria-hidden="true">→</span>
+              </a>
+            </p>
           </div>
         </div>
       </section>

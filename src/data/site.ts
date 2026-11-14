@@ -18,9 +18,9 @@ export const site = {
   positioning: {
     // Recommendation in docs/strategy/positioning.md; swap here if the owner chooses another line.
     headline: 'Where strategy meets execution.',
-    // Supporting line refined in ChatGPT review round 1.
+    // Supporting line refined in ChatGPT review rounds 1 and 3 (round 3: name the work specifically).
     subheadline:
-      'We help founders and growing businesses turn complex challenges into clear plans, practical solutions and measurable progress.',
+      'We work with founders and growing businesses on strategy, business planning, growth initiatives and practical execution.',
     description:
       'Melbourne-based strategy and execution partner for founders and growing businesses: strategy, growth execution, business planning and commercial partnerships.',
   },
@@ -111,7 +111,7 @@ export const services: Service[] = [
       'Process and systems set-up for the next stage of growth',
       'Leading priority initiatives alongside your team',
     ],
-    outcomes: ['Initiatives delivered, not just planned', 'A simple dashboard of the measures that matter'],
+    outcomes: ['Agreed priorities progressed, with milestones and outcomes documented', 'A simple dashboard of the measures that matter'],
   },
   {
     id: 'business-planning',
@@ -139,7 +139,7 @@ export const services: Service[] = [
       'Commercial introductions where there is a clear fit and both sides agree',
       'Structure a first phase so both sides can test the relationship',
     ],
-    outcomes: ['A shortlist of qualified commercial partners', 'Partnership proposals ready to discuss'],
+    outcomes: ['A researched shortlist of potential commercial partners for consideration', 'Partnership proposals ready to discuss'],
     note: 'Introductions are for commercial partnerships only, never for investment.',
   },
 ];
@@ -178,7 +178,7 @@ export const principles = [
   },
   {
     title: 'Small by design',
-    text: 'You work directly with the founder. There is no hand-off to a junior team and no layers between you and the work.',
+    text: 'Fundex Global is a small, founder-led firm. The founder oversees client engagements, so you always know who is responsible for the work.',
   },
   {
     title: 'Clear scope',
@@ -191,6 +191,7 @@ export const enquiryTypes = [
   { value: 'execution', label: 'Execution & growth support' },
   { value: 'business-planning', label: 'Business planning & pitch preparation' },
   { value: 'partnerships', label: 'Commercial partnerships & business development' },
+  { value: 'not-sure', label: "I'm not sure yet" },
   { value: 'other', label: 'Something else' },
 ] as const;
 

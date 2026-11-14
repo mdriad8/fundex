@@ -42,8 +42,12 @@ export const MESSAGES: Record<Outcome['code'], string> = {
   'not-configured': `The contact form is not accepting messages yet, so nothing was sent. Please ${fallbackContact}.`,
 };
 
+/**
+ * Client IP for rate limiting. On Vercel, `x-vercel-forwarded-for` / `x-forwarded-for` are set by the
+ * platform edge (client-supplied values are not trusted through), so they reflect the real client.
+ */
 export function getClientIp(request: Request, fallback?: string): string | undefined {
-  const xff = request.headers.get('x-forwarded-for');
+  const xff = request.headers.get('x-vercel-forwarded-for') ?? request.headers.get('x-forwarded-for');
   if (xff) return xff.split(',')[0]!.trim();
   return request.headers.get('x-real-ip') ?? fallback;
 }

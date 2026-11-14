@@ -7,7 +7,6 @@ const valid = {
   organisation: 'Example Pty Ltd',
   enquiryType: 'strategy',
   message: 'We are planning our next stage of growth and would like to talk.',
-  consent: 'on',
 };
 
 describe('validateContact', () => {
@@ -16,7 +15,6 @@ describe('validateContact', () => {
     expect(r.ok).toBe(true);
     if (r.ok) {
       expect(r.data.email).toBe('alex@example.com');
-      expect(r.data.consent).toBe(true);
     }
   });
 
@@ -30,7 +28,6 @@ describe('validateContact', () => {
     ['message', { message: 'too short' }],
     ['message', { message: 'x'.repeat(4001) }],
     ['organisation', { organisation: 'x'.repeat(121) }],
-    ['consent', { consent: undefined }],
   ])('rejects invalid %s', (field, override) => {
     const r = validateContact({ ...valid, ...override });
     expect(r.ok).toBe(false);

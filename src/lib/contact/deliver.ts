@@ -30,7 +30,7 @@ export function buildEmail(input: ContactInput, meta: { receivedAt: Date }) {
     `Email: ${input.email}`,
     `Organisation: ${input.organisation || '(not provided)'}`,
     `Enquiry type: ${label}`,
-    `Privacy notice acknowledged: yes`,
+    `Privacy collection notice shown with form: yes`,
     `Received: ${meta.receivedAt.toISOString()}`,
     ``,
     `Message:`,

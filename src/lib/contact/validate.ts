@@ -6,7 +6,6 @@ export type ContactInput = {
   organisation: string;
   enquiryType: EnquiryType;
   message: string;
-  consent: boolean;
 };
 
 export type FieldErrors = Partial<Record<keyof ContactInput, string>>;
@@ -41,8 +40,6 @@ export function validateContact(raw: Record<string, unknown>):
   const organisation = clean(raw.organisation);
   const enquiryRaw = clean(raw.enquiryType);
   const message = clean(raw.message, { singleLine: false });
-  const consentRaw = raw.consent;
-  const consent = consentRaw === true || consentRaw === 'on' || consentRaw === 'true' || consentRaw === 'yes';
 
   if (name.length < LIMITS.name.min) errors.name = 'Please enter your name.';
   else if (name.length > LIMITS.name.max) errors.name = `Please keep your name under ${LIMITS.name.max} characters.`;
@@ -63,11 +60,9 @@ export function validateContact(raw: Record<string, unknown>):
   else if (message.length > LIMITS.message.max)
     errors.message = `Please keep your message under ${LIMITS.message.max} characters.`;
 
-  if (!consent) errors.consent = 'Please confirm you have read the privacy collection notice.';
-
   if (Object.keys(errors).length) return { ok: false, errors };
   return {
     ok: true,
-    data: { name, email, organisation, enquiryType: enquiryType as EnquiryType, message, consent },
+    data: { name, email, organisation, enquiryType: enquiryType as EnquiryType, message },
   };
 }

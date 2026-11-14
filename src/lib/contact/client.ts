@@ -7,7 +7,7 @@
 
 type ApiResponse = { ok: boolean; code: string; message: string; errors?: Record<string, string> };
 
-const FIELDS = ['name', 'email', 'organisation', 'enquiryType', 'message', 'consent'] as const;
+const FIELDS = ['name', 'email', 'organisation', 'enquiryType', 'message'] as const;
 
 const LABELS: Record<(typeof FIELDS)[number], string> = {
   name: 'Your name',
@@ -15,7 +15,6 @@ const LABELS: Record<(typeof FIELDS)[number], string> = {
   organisation: 'Organisation',
   enquiryType: 'Enquiry type',
   message: 'Your message',
-  consent: 'Privacy notice',
 };
 
 function clientErrors(form: HTMLFormElement): Record<string, string> {
@@ -29,7 +28,6 @@ function clientErrors(form: HTMLFormElement): Record<string, string> {
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errors.email = 'Please enter a valid email address, like name@example.com.';
   if (!(get('enquiryType')?.value)) errors.enquiryType = 'Please choose what your enquiry is about.';
   if (message.length < 20) errors.message = 'Please tell us a little more (at least 20 characters).';
-  if (!get('consent')?.checked) errors.consent = 'Please confirm you have read the privacy collection notice.';
   return errors;
 }
 
@@ -39,6 +37,11 @@ export function enhanceContactForm(form: HTMLFormElement) {
   const label = form.querySelector<HTMLElement>('[data-submit-label]');
   const startedAt = form.querySelector<HTMLInputElement>('[data-started-at]');
   if (startedAt) startedAt.value = String(Date.now());
+
+  // Preselect the enquiry type when arriving from a service link, e.g. /contact?enquiry=strategy
+  const wanted = new URLSearchParams(window.location.search).get('enquiry');
+  const select = form.elements.namedItem('enquiryType') as HTMLSelectElement | null;
+  if (wanted && select && [...select.options].some((o) => o.value === wanted)) select.value = wanted;
 
   const showFieldErrors = (errors: Record<string, string>) => {
     for (const f of FIELDS) {

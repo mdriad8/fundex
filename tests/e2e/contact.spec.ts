@@ -10,7 +10,6 @@ async function fillValid(page: Page) {
   await page.getByLabel('Email address').fill(`alex+${Date.now()}${Math.floor(Math.random() * 1e4)}@example.com`);
   await page.getByLabel('What is your enquiry about?').selectOption('strategy');
   await page.getByLabel('Your message').fill('We are planning the next stage of growth and want to talk it through.');
-  await page.getByLabel(/I have read the privacy collection notice/).check();
 }
 
 test.describe('contact form', () => {
@@ -91,7 +90,19 @@ test.describe('contact form', () => {
     expect(res.status()).toBe(422);
     const json = await res.json();
     expect(json.ok).toBe(false);
-    expect(Object.keys(json.errors)).toEqual(expect.arrayContaining(['name', 'email', 'enquiryType', 'message', 'consent']));
+    expect(Object.keys(json.errors)).toEqual(expect.arrayContaining(['name', 'email', 'enquiryType', 'message']));
+  });
+
+  test('a service link preselects the enquiry type', async ({ page }) => {
+    await page.goto('/contact?enquiry=partnerships');
+    await expect(page.getByLabel('What is your enquiry about?')).toHaveValue('partnerships');
+    await page.goto('/contact?enquiry=not-a-real-option');
+    await expect(page.getByLabel('What is your enquiry about?')).toHaveValue('');
+  });
+
+  test('the privacy collection notice is linked next to the submit button', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(page.locator('#privacy-note').getByRole('link', { name: 'privacy collection notice' })).toHaveAttribute('href', '/privacy#collection-notice');
   });
 
   test('the honeypot field is hidden from users and assistive technology', async ({ page }) => {
@@ -99,6 +110,14 @@ test.describe('contact form', () => {
     const hp = page.locator('#website');
     await expect(hp).not.toBeInViewport();
     await expect(page.getByRole('textbox', { name: 'Leave this field empty' })).toHaveCount(0);
+  });
+
+  test('cross-site form posts are rejected (Astro checkOrigin, CSRF protection)', async ({ request }) => {
+    const res = await request.post('/api/contact', {
+      headers: { Origin: 'https://evil.example', 'x-forwarded-for': testIp() },
+      form: { name: 'Alex', email: 'a@example.com', enquiryType: 'strategy', message: 'x'.repeat(30) },
+    });
+    expect(res.status()).toBe(403);
   });
 
   test('GET on the API is not allowed', async ({ request }) => {

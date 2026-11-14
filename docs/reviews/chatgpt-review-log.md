@@ -33,3 +33,24 @@ All reviews took place in the founder's ChatGPT project **"Fundex"**, chat **"Fu
 | P3: service strips are monotonous; tighten mobile spacing; simplify the footer | Services alternate column order and card treatment. Home service cards are 2×2 with an audience line. Fluid section padding is tighter on mobile. The footer drops the services column below 768 px. The Insights empty state is compacted |
 | Home service cards feel compressed | Changed from 4-across to 2×2 with larger type |
 | Don't add decorative animation, fake logos or invented metrics | Nothing added |
+
+## Round 3: content and conversion
+
+**Sent:** the full copy of every page, exported from the built HTML (titles, meta descriptions, all body text, footer), plus Home and Contact screenshots.
+
+**Verdict:** 8.5/10, conditional pass. Approved for round 4 after corrections. "The biggest remaining conversion risk is no longer the writing; it is whether the contact form reliably delivers enquiries and someone responds."
+
+| ChatGPT point | Action taken |
+|---|---|
+| Services and Insights meta descriptions still said "investment readiness" | Both rewritten. "investment readiness" added to the content test's banned list |
+| "Works directly with every client" / "no hand-off" are absolute operational promises | Rewritten to ChatGPT's suggestion ("…led by Nahid Tanjum, who oversees the firm's strategy and client engagements"). The principle was softened to "The founder oversees client engagements" |
+| Outcomes imply guarantees ("Initiatives delivered", "qualified commercial partners") | Replaced with ChatGPT's exact wording: "Agreed priorities progressed, with milestones and outcomes documented"; "A researched shortlist of potential commercial partners for consideration" |
+| Make the hero more specific about the work | Sub-headline replaced with "We work with founders and growing businesses on strategy, business planning, growth initiatives and practical execution." |
+| Scam statement wording | Replaced on Contact and Legal with "Fundex Global does not solicit investments. Never share passwords, and independently verify any payment request through our official contact channel." |
+| Add "I'm not sure yet" to the enquiry dropdown | Added (`not-sure`) |
+| Replace the mandatory privacy consent with an acknowledgement of the linked collection notice | Checkbox removed. A short note with a link to `/privacy#collection-notice` now sits next to the submit button (`aria-describedby`). Validation and tests updated |
+| Honeypot must be invisible and unfocusable | Already off-screen, `aria-hidden`, `tabindex=-1`. Covered by an e2e test |
+| Success must mean server-confirmed delivery, with a retry path on failure | Already enforced: success shows only on HTTP 200 + `ok:true`, and every failure message gives a retry or alternative path. Covered by unit and e2e tests |
+| Pass the selected service into the contact form | Each service section on `/services` now links to `/contact?enquiry=<id>`, which preselects the dropdown. Tested |
+| Test the two-business-day reply promise against real inbox monitoring | Owner decision 11 (unchanged) |
+| Verify AFSL status before publishing the "no AFSL" statement | Owner decision 2 (unchanged, blocking) |

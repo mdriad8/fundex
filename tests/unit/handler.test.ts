@@ -17,7 +17,6 @@ const fields = (over: Record<string, string> = {}) =>
     organisation: '',
     enquiryType: 'execution',
     message: 'We need help turning our plan into a delivery rhythm.',
-    consent: 'on',
     website: '',
     startedAt: String(NOW - 30_000),
     ...over,
@@ -151,7 +150,6 @@ describe('buildEmail', () => {
         organisation: '',
         enquiryType: 'other',
         message: 'm'.repeat(30),
-        consent: true,
       },
       { receivedAt: new Date(NOW) },
     );

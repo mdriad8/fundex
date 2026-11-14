@@ -86,7 +86,7 @@ Headings use `text-wrap: balance`, body text uses `text-wrap: pretty`, and both 
 | Cards | `.card` | White, 1 px line, 16 px radius, soft shadow |
 | Tick list | `.tick-list` | CSS-drawn ticks in gold-700 (gold-400 on dark) |
 | Notice | `.notice` | Gold-edged note for scope and scam statements |
-| Form fields | `pages/contact.astro` | Visible labels, hints linked with `aria-describedby`, inline errors plus a focusable error summary, 16 px inputs (no iOS zoom), 24 px checkbox |
+| Form fields | `pages/contact.astro` | Visible labels, hints linked with `aria-describedby`, inline errors plus a focusable error summary, 16 px inputs (no iOS zoom), privacy collection notice linked next to the submit button (an acknowledgement, not a checkbox, per review round 3). `?enquiry=<service-id>` preselects the enquiry type |
 
 ## 6. Motion
 
