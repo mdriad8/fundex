@@ -315,6 +315,90 @@
   }
 }
 
+/* ---------- Hackathon page (Beyond the Prompt) ---------- */
+.hk-twinkle {
+  animation: hk-twinkle 4s ease-in-out infinite;
+}
+@keyframes hk-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.hk-bob {
+  animation: hk-bob 7s ease-in-out infinite;
+}
+@keyframes hk-bob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+.hk-fly {
+  animation: hk-fly 28s linear infinite;
+  will-change: transform;
+}
+@keyframes hk-fly {
+  0% {
+    transform: translate3d(-45vw, 0, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate3d(35vw, -18px, 0) rotate(1deg);
+  }
+  100% {
+    transform: translate3d(115vw, 6px, 0) rotate(-2deg);
+  }
+}
+.hk-block {
+  transform-box: fill-box;
+  animation: hk-block 6s ease-in-out infinite;
+}
+@keyframes hk-block {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+/* Chunky extruded block letters */
+.hk-chunky {
+  color: #f0fdfa;
+  text-shadow:
+    1px 1px 0 #2dd4bf,
+    2px 2px 0 #14b8a6,
+    3px 3px 0 #0d9488,
+    4px 4px 0 #0f766e,
+    5px 5px 0 #115e59,
+    6px 6px 0 #134e4a,
+    7px 7px 0 #134e4a,
+    8px 8px 0 #042f2e,
+    10px 14px 28px rgba(0, 0, 0, 0.55);
+}
+.hk-chunky-dark {
+  color: #0f172a;
+  text-shadow:
+    1px 1px 0 #5eead4,
+    2px 2px 0 #2dd4bf,
+    3px 3px 0 #14b8a6,
+    4px 4px 0 #0d9488,
+    5px 5px 0 #0f766e;
+}
+.hk-paper {
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(rgba(15, 118, 110, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 118, 110, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -335,7 +419,13 @@
   .float-slow,
   .float-slower,
   .scroll-cue,
-  .page-enter {
+  .page-enter,
+  .hk-twinkle,
+  .hk-bob,
+  .hk-block {
     animation: none !important;
+  }
+  .hk-fly {
+    display: none !important;
   }
 }

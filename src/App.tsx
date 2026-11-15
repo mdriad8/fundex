@@ -14,6 +14,7 @@ const Approach = lazy(() => import('./pages/Approach'));
 const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Privacy = lazy(() => import('./pages/Privacy'));
+const Hackathon = lazy(() => import('./pages/Hackathon'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 function AnimatedRoutes() {
@@ -28,6 +29,7 @@ function AnimatedRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/hackathon" element={<Hackathon />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       </Suspense>
