@@ -36,11 +36,11 @@ const fade = (ms: number) => ({ '--fade-delay': `${ms}ms` }) as CSSProperties;
 
 /* ------------------------------------------------------------------ data */
 
-const ticker = ['AI', 'Automation', 'No-code welcome', '48 hours', 'Fully online', 'Any time zone', '18+', 'A$750 in prizes', 'You keep your IP', 'Free to enter'];
+const ticker = ['AI', 'Automation', 'No-code welcome', '48 hours', 'Fully online', 'Any time zone', '18+', 'Prizes to be won', 'You keep your IP', 'Free to enter'];
 
 const stats = [
   { value: '48', unit: 'hours', label: 'Kick-off to submission' },
-  { value: 'A$750', unit: '', label: 'Guaranteed prize pool' },
+  { value: 'TBA', unit: '', label: 'Prizes, announced soon' },
   { value: '1–4', unit: 'people', label: 'Per team' },
   { value: 'A$0', unit: '', label: 'To enter, and no paid tools needed' },
 ];
@@ -89,9 +89,9 @@ const schedule: { when: string; what: string; utc?: string; key?: boolean }[] = 
 ];
 
 const prizes = [
-  { icon: Trophy, amount: 'A$500', label: '1st place' },
-  { icon: Medal, amount: 'A$150', label: '2nd place' },
-  { icon: Sparkles, amount: 'A$100', label: 'Best Beginner-Led Team' },
+  { icon: Trophy, amount: '1st', label: 'Grand prize' },
+  { icon: Medal, amount: '2nd', label: 'Runner-up' },
+  { icon: Sparkles, amount: 'Best', label: 'Beginner-Led Team' },
 ];
 
 const weights: [string, number][] = [
@@ -285,7 +285,7 @@ export default function Hackathon() {
             </div>
             <Cloud className="absolute left-0 top-6 sm:left-[4%] sm:top-12" delay={0}>23–25 Jan 2027</Cloud>
             <Cloud className="absolute right-0 top-2 sm:right-[6%] sm:top-6" delay={2} tone="teal">48 hours · online</Cloud>
-            <Cloud className="absolute left-[8%] top-40 hidden sm:inline-block lg:left-[12%] lg:top-56" delay={4}>A$750 in prizes</Cloud>
+            <Cloud className="absolute left-[8%] top-40 hidden sm:inline-block lg:left-[12%] lg:top-56" delay={4}>Prizes to be won</Cloud>
             <Cloud className="absolute right-[2%] top-36 hidden sm:inline-block lg:right-[10%] lg:top-52" delay={1} href="#challenge">The challenge →</Cloud>
             <Cloud className="absolute left-1/2 bottom-16 -translate-x-1/2 hidden lg:inline-block" delay={3} tone="teal">Australia ✦ the world</Cloud>
           </div>
@@ -518,8 +518,9 @@ export default function Hackathon() {
           <Reveal className="text-center">
             <Tag>Prizes · funded by Fundex Global</Tag>
             <h2 id="prizes-title" className="font-display text-4xl sm:text-6xl font-black uppercase leading-[0.95] tracking-tight text-slate-900">
-              A$750 up for grabs
+              Prizes worth building for
             </h2>
+            <p className="mt-4 font-mono text-sm uppercase tracking-[0.18em] text-teal-700">Prize amounts and partner prizes announced soon</p>
           </Reveal>
           <div className="mt-14 grid items-end gap-6 md:grid-cols-3">
             {[1, 0, 2].map((idx) => {
