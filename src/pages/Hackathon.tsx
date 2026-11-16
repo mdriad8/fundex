@@ -229,9 +229,9 @@ export default function Hackathon() {
       </Helmet>
 
       {PREVIEW && (
-        <div className="relative z-20 -mt-20 pt-16 sm:pt-20 md:pt-[5.75rem] bg-amber-400/10 border-b border-amber-300/20">
-          <p className="max-w-6xl mx-auto px-5 sm:px-8 py-2 text-center text-xs sm:text-sm text-amber-100">
-            Private preview. Dates, prizes and rules are pending Fundex approval, and registration isn’t open yet.
+        <div className="relative z-20 -mt-20 pt-16 sm:pt-20 md:pt-[5.75rem] bg-teal-400/10 border-b border-teal-300/20">
+          <p className="max-w-6xl mx-auto px-5 sm:px-8 py-2 text-center text-xs sm:text-sm text-teal-100">
+            Save the date: registration opens Tuesday 1 December 2026. Prize details will be announced soon.
           </p>
         </div>
       )}
