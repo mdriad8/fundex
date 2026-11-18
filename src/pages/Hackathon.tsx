@@ -20,13 +20,13 @@ import Globe from '../components/hackathon/Globe';
 import Blocks from '../components/hackathon/Blocks';
 import { Cloud, Plane, Stars } from '../components/hackathon/Sky';
 import { useMinWidth, useScrollProgress } from '../components/cinema/useScrollProgress';
+import { EventBar, PREVIEW } from './hackathon/Layout';
 
 /**
  * Beyond the Prompt 2027: the Fund'ex hackathon page.
- * While PREVIEW is true the page is noindex and not linked from the menu or sitemap.
+ * PREVIEW lives in ./hackathon/Layout.tsx and applies to every hackathon page. While PREVIEW is true the page is noindex and not linked from the menu or sitemap.
  * Before launch: set PREVIEW = false and REG_URL to the registration form, then add the menu link and sitemap entry.
  */
-const PREVIEW = true;
 const REG_URL = '';
 
 const START = '2027-01-23T00:00:00Z';
@@ -105,10 +105,18 @@ const weights: [string, number][] = [
 ];
 
 const tiers = [
-  { name: 'Community partner', text: 'Share the event with your members once, and nominate mentors or judges.' },
-  { name: 'Tools partner', text: 'Optional credits, licences or trial codes for teams, listed in the starter kit.' },
-  { name: 'Track partner', text: 'Own a “Best use of {your product}” prize and a short recorded workshop.' },
-  { name: 'Supporting partner', text: 'Headline support, a slot in the opening video, and a post-event report.' },
+  { name: 'Main sponsor', text: '“Presented by” naming, the Grand Prize in your name, a conference talk and a welcome in the opening keynote.' },
+  { name: 'Diamond · Gold · Silver', text: 'A prize or workshop in your name, mentors from your team, and recognition across the event.' },
+  { name: 'Supporting sponsor', text: 'Your logo on the supporters row and a thank-you from the Fund’ex channels.' },
+  { name: 'In-kind sponsor', text: 'Credits, licences or services for teams, with a named partner title.' },
+];
+
+const involve = [
+  { n: '01', title: 'Campus Ambassadors', text: 'Students, researchers and staff at any university, worldwide.', to: '/hackathon/ambassadors' },
+  { n: '02', title: 'Club Partners', text: 'Student clubs and societies that share the event with members.', to: '/hackathon/apply/club' },
+  { n: '03', title: 'Community Partners', text: 'Developer groups, AI communities and meetups.', to: '/hackathon/apply/community' },
+  { n: '04', title: 'University Partners', text: 'A venue, official promotion, a representative or speakers.', to: '/hackathon/apply/university' },
+  { n: '05', title: 'Speakers', text: 'Online on Sat 23 Jan or in person in Melbourne on Sun 24 Jan.', to: '/hackathon/apply/speaker' },
 ];
 
 const rules = [
@@ -236,8 +244,10 @@ export default function Hackathon() {
         </div>
       )}
 
+      <EventBar />
+
       {/* ============ HERO: night sky, block letters, rising globe ============ */}
-      <section className={`relative overflow-hidden bg-[#03121a] ${PREVIEW ? '' : '-mt-20 pt-20'}`}>
+      <section className="relative overflow-hidden bg-[#03121a]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#04202a] to-[#0a3a3d]" />
         <div className="absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_60%_70%_at_50%_100%,rgba(45,212,191,0.35),transparent_70%)]" />
         <Stars count={110} />
@@ -584,6 +594,45 @@ export default function Hackathon() {
         </div>
       </section>
 
+      {/* ============ GET INVOLVED ============ */}
+      <section id="get-involved" className="relative overflow-hidden bg-[#03121a] px-5 sm:px-8 py-24 sm:py-28" aria-labelledby="involve-title">
+        <Stars count={50} seed={31} />
+        <div className="relative mx-auto max-w-6xl">
+          <Reveal>
+            <Tag dark>Get involved</Tag>
+            <h2 id="involve-title" className="font-display text-4xl sm:text-6xl font-black uppercase leading-[0.95] tracking-tight text-white">
+              Bring your campus. Bring your community.
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg text-slate-300">
+              We&rsquo;re building a worldwide network of Campus Ambassadors, clubs, communities and universities. Pick your route and apply in about five minutes.
+            </p>
+          </Reveal>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {involve.map((r, i) => (
+              <Reveal key={r.n} delay={i * 70}>
+                <Link
+                  to={r.to}
+                  className="group flex h-full flex-col rounded-2xl border border-teal-300/25 bg-white/[0.03] p-5 transition-all hover:-translate-y-1 hover:border-teal-300 hover:bg-teal-300/[0.06]"
+                >
+                  <span className="font-mono text-xs font-bold text-teal-300">{r.n} //</span>
+                  <span className="mt-3 font-display text-xl font-bold text-white">{r.title}</span>
+                  <span className="mt-2 flex-1 text-sm text-slate-400">{r.text}</span>
+                  <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs font-bold uppercase tracking-wider text-teal-300">
+                    Apply <ArrowRight className="transition-transform group-hover:translate-x-1" size={14} />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+          <Link
+            to="/hackathon/contribute"
+            className="mt-10 inline-flex items-center gap-2 rounded-2xl border-2 border-slate-950 bg-teal-400 px-7 py-4 font-mono text-sm font-bold uppercase tracking-wider text-slate-950 shadow-[6px_6px_0_#f0fdfa] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_#f0fdfa]"
+          >
+            All ways to get involved <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+
       {/* ============ SPONSOR US ============ */}
       <section id="sponsor" className="relative overflow-hidden bg-teal-400 px-5 sm:px-8 py-24 sm:py-28" aria-labelledby="sponsor-title">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(2,6,23,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(2,6,23,0.08)_1px,transparent_1px)] bg-[size:28px_28px]" aria-hidden="true" />
@@ -599,12 +648,12 @@ export default function Hackathon() {
               <p className="mt-5 text-lg text-slate-900/80">
                 Back a global hackathon where every prize team includes an Australian builder. We never share participant data, sell guaranteed numbers, or let partners influence judging.
               </p>
-              <Link
-                to="/contact"
+              <a
+                href={`mailto:nahid@fundexglobal.vc?subject=${encodeURIComponent('Beyond the Prompt 2027 sponsorship prospectus')}`}
                 className="mt-8 inline-flex items-center gap-2 rounded-2xl border-2 border-slate-950 bg-slate-950 px-7 py-4 font-mono text-sm font-bold uppercase tracking-wider text-teal-300 shadow-[6px_6px_0_#f0fdfa] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_#f0fdfa]"
               >
-                Ask for the sponsor pack <ArrowRight size={18} />
-              </Link>
+                Request the prospectus <ArrowRight size={18} />
+              </a>
             </Reveal>
             <div className="grid gap-4 sm:grid-cols-2">
               {tiers.map((t, i) => (
