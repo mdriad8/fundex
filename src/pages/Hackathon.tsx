@@ -24,8 +24,9 @@ import { EventBar, PREVIEW } from './hackathon/Layout';
 
 /**
  * Beyond the Prompt 2027: the Fund'ex hackathon page.
- * PREVIEW lives in ./hackathon/Layout.tsx and applies to every hackathon page. While PREVIEW is true the page is noindex and not linked from the menu or sitemap.
- * Before launch: set PREVIEW = false and REG_URL to the registration form, then add the menu link and sitemap entry.
+ * PREVIEW lives in ./hackathon/Layout.tsx and applies to every hackathon page. While PREVIEW is true the pages are noindex
+ * and left out of the sitemap (they are linked from the main menu). hackathon.fundexglobal.vc redirects here (vercel.json).
+ * Before launch: set PREVIEW = false and REG_URL to the registration form, then add the sitemap entries.
  */
 const REG_URL = '';
 

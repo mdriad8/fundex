@@ -41,6 +41,7 @@ function Footer() {
                 { name: 'Services', path: '/services' },
                 { name: 'Approach', path: '/approach' },
                 { name: 'About', path: '/about' },
+                { name: 'Beyond the Prompt hackathon', path: '/hackathon' },
                 { name: 'Contact', path: '/contact' },
               ].map((item) => (
                 <li key={item.path}>

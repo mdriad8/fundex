@@ -68,6 +68,7 @@ function Header() {
               { to: '/services', label: 'Services', end: false },
               { to: '/approach', label: 'Approach', end: false },
               { to: '/about', label: 'About', end: false },
+              { to: '/hackathon', label: 'Hackathon', end: false },
               { to: '/contact', label: 'Contact', end: false },
             ].map((item) => (
               <NavLink key={item.to} to={item.to} end={item.end} className={navClass}>
@@ -102,6 +103,7 @@ function Header() {
             <NavLink to="/services" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Services</NavLink>
             <NavLink to="/approach" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Approach</NavLink>
             <NavLink to="/about" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>About</NavLink>
+            <NavLink to="/hackathon" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Hackathon</NavLink>
             <NavLink to="/contact" className={mobileNavClass} onClick={() => setIsMobileMenuOpen(false)}>Contact</NavLink>
           </div>
         </div>
