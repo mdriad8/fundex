@@ -6,7 +6,8 @@
  * to a Google Sheet in the Fund'ex account (one tab per form), gives it an ID, emails Nahid, and sends the
  * applicant a short acknowledgement. Nothing is shared with sponsors.
  *
- * ONE-TIME SET-UP (signed in as nahid@fundexglobal.vc):
+ * ONE-TIME SET-UP (the script runs in Nahid's Google account nahidtanzum665@gmail.com; notifications go to
+ * nahid@fundexglobal.vc):
  *   1. script.google.com → New project → paste this file → Save.
  *   2. Run "setup" once → Review permissions → Allow. It creates the Sheet and prints its link.
  *   3. Deploy → New deployment → type "Web app" → Execute as: Me → Who has access: Anyone → Deploy.
@@ -23,6 +24,9 @@ var CONFIG = {
   maxPayloadLength: 20000,
   perEmailPerHour: 3,
   allPerTenMinutes: 60,
+  // Off while the script runs in a personal Gmail account: acknowledgements would come from that address,
+  // and everything public goes out from Fund'ex. The website shows applicants their reference instead.
+  sendAcknowledgement: false,
 };
 
 // BEGIN-FORMS: kept in step with src/pages/hackathon/applications.ts by tests/applications.test.ts
@@ -121,7 +125,7 @@ function doPost(e) {
     }
 
     notify_(form, id, values);
-    acknowledge_(form, id, values, email);
+    if (CONFIG.sendAcknowledgement) acknowledge_(form, id, values, email);
     return json_({ ok: true, id: id });
   } catch (err) {
     console.error(err);
