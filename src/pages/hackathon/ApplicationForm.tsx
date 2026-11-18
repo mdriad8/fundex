@@ -1,16 +1,13 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
-import { APPLY_ENDPOINT, CONTACT_EMAIL, allFields, validate, type Field, type FormDef } from './applications';
+import { CONTACT_EMAIL, GOOGLE_FORM, allFields, makeReference, toGoogleFormData, validate, type Field, type FormDef } from './applications';
 
 type Values = Record<string, string | boolean | string[]>;
 type State = { kind: 'idle' } | { kind: 'sending' } | { kind: 'done'; id: string } | { kind: 'error'; message: string };
 
-const ERRORS: Record<string, string> = {
-  invalid: 'Some required details are missing. Please check the form and try again.',
-  'rate-limited': 'Too many applications have been sent from this email recently. Please try again in an hour.',
-  rejected: 'We could not accept this submission. Please wait a few seconds and try again.',
-};
+/** Humans take longer than this to fill in a form; faster submissions are treated as bots. */
+const MIN_FILL_MS = 4000;
 
 const inputCls =
   'w-full rounded-xl border-2 border-slate-900 bg-white px-4 py-3 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-teal-300/60 aria-[invalid=true]:border-rose-600';
@@ -140,26 +137,20 @@ export default function ApplicationForm({ def }: { def: FormDef }) {
       });
       return;
     }
-    if (!APPLY_ENDPOINT) {
-      setState({ kind: 'error', message: `Online applications aren’t switched on yet. Please email ${CONTACT_EMAIL} and we’ll get back to you.` });
+    // Bots: the hidden honeypot is filled in, or the form was completed impossibly fast. Show success, save nothing.
+    if (honeypot.current?.value || Date.now() - startedAt.current < MIN_FILL_MS) {
+      setState({ kind: 'done', id: makeReference(def.kind) });
       return;
     }
     setState({ kind: 'sending' });
+    const reference = makeReference(def.kind);
     try {
-      // text/plain keeps this a "simple" request, which Google Apps Script web apps accept cross-origin.
-      const res = await fetch(APPLY_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ kind: def.kind, values, startedAt: startedAt.current, website: honeypot.current?.value ?? '' }),
-      });
-      const json = (await res.json()) as { ok?: boolean; id?: string; code?: string };
-      if (json.ok && json.id) {
-        setState({ kind: 'done', id: json.id });
-        return;
-      }
-      setState({ kind: 'error', message: ERRORS[json.code ?? ''] ?? `Something went wrong on our side, so your application was not saved. Please try again later or email ${CONTACT_EMAIL}.` });
+      // Google Forms doesn't send CORS headers, so the response can't be read ("no-cors").
+      // A network failure still rejects, which we report; otherwise the response is stored.
+      await fetch(GOOGLE_FORM.action, { method: 'POST', mode: 'no-cors', body: toGoogleFormData(def, values, reference) });
+      setState({ kind: 'done', id: reference });
     } catch {
-      setState({ kind: 'error', message: `We couldn’t confirm that your application was received. Please wait a few minutes before trying again, or email ${CONTACT_EMAIL}.` });
+      setState({ kind: 'error', message: `We couldn’t send your application. Please check your connection and try again, or email ${CONTACT_EMAIL}.` });
     }
   }
 

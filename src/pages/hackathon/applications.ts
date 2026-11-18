@@ -1,11 +1,68 @@
 /**
  * Beyond the Prompt 2027: application forms (Campus Ambassador, Club, Community, University, Speaker).
- * One schema drives both the website forms and the checks in the Google Apps Script receiver
- * (apps-script/partner_applications.gs). tests/applications.test.ts keeps the two in step.
+ *
+ * People fill these in on our website. On submit, the answers are posted in the background to a private
+ * Google Form ("Beyond the Prompt 2027 - Website applications", owned by Nahid's Google account), which
+ * stores them in the "Beyond the Prompt 2027 - Applications" Sheet and emails Nahid for each response.
+ * Visitors never see the Google Form. Its question IDs are below; if a question is changed or recreated,
+ * update the matching ID (open the form's viewform page and read FB_PUBLIC_LOAD_DATA_).
  */
 
-/** Paste the Apps Script web-app URL here once it is deployed (ends in /exec). Empty = forms show an email fallback. */
-export const APPLY_ENDPOINT = '';
+export const GOOGLE_FORM = {
+  action: 'https://docs.google.com/forms/d/e/1FAIpQLSe4S1X1h0Lu-AW1u-PQFzBeWrHldTF8NQcC4ywst7SWm4rt0w/formResponse',
+  entries: {
+    reference: 'entry.794643218',
+    type: 'entry.1100338591',
+    name: 'entry.891412096',
+    email: 'entry.2057497821',
+    place: 'entry.237351228',
+    answers: 'entry.975409202',
+  },
+} as const;
+
+export const REF_PREFIX: Record<FormKind, string> = {
+  ambassador: 'AMB',
+  club: 'CLB',
+  community: 'COM',
+  university: 'UNI',
+  speaker: 'SPK',
+};
+
+/** Short reference shown to the applicant and stored with the response, e.g. BTP-AMB-7K2Q9X. */
+export function makeReference(kind: FormKind, rand: () => number = Math.random): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < 6; i++) s += chars[Math.floor(rand() * chars.length)];
+  return `BTP-${REF_PREFIX[kind]}-${s}`;
+}
+
+/** Turn one answer into readable text for the Sheet. */
+function show(v: unknown): string {
+  if (v === true) return 'Yes';
+  if (v === false || v === undefined || v === null) return 'No';
+  if (Array.isArray(v)) return v.join('; ');
+  return String(v).trim();
+}
+
+/** The form fields Google receives (as application/x-www-form-urlencoded). */
+export function toGoogleFormData(def: FormDef, values: Record<string, unknown>, reference: string): URLSearchParams {
+  const lines = allFields(def)
+    .filter((f) => {
+      if (f.type === 'checkbox') return true;
+      const v = values[f.name];
+      return Array.isArray(v) ? v.length > 0 : typeof v === 'string' && v.trim() !== '';
+    })
+    .map((f) => `${f.label.replace(/\s+/g, ' ')}: ${show(values[f.name])}`);
+  const e = GOOGLE_FORM.entries;
+  return new URLSearchParams({
+    [e.reference]: reference,
+    [e.type]: def.title,
+    [e.name]: show(values.fullName),
+    [e.email]: show(values.email),
+    [e.place]: `${show(values.country)}, ${show(values.city)}`,
+    [e.answers]: lines.join('\n'),
+  });
+}
 
 export const CONTACT_EMAIL = 'nahid@fundexglobal.vc';
 
